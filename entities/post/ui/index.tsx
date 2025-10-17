@@ -3,15 +3,15 @@ import * as S from "./styled";
 
 const styles = StyleSheet.create({
   post: {
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
   },
 });
 
 export interface PostProps {
-  $avatar: string;
-  $username: string;
-  $role: string;
-  $desc: string;
+  $avatar?: string;
+  $username?: string;
+  $role?: string;
+  $desc?: string;
 }
 
 export const Post: React.FC<PostProps> = ({
@@ -21,15 +21,17 @@ export const Post: React.FC<PostProps> = ({
   $username,
 }) => {
   return (
-    <S.PostStyled style={styles.post}>
-      <S.PostHeader>
-        <S.PostAvatar source={$avatar} />
-        <S.PostHeaderTexts>
-          <S.PostHeaderUsername>{$username}</S.PostHeaderUsername>
-          <S.PostHeaderUserRole>{$role}</S.PostHeaderUserRole>
-        </S.PostHeaderTexts>
-      </S.PostHeader>
-      <S.PostDescription>{$desc}</S.PostDescription>
-    </S.PostStyled>
+    <S.PostWrapper onPress={() => console.log("ASd")}>
+      <S.PostStyled style={styles.post}>
+        <S.PostHeader>
+          <S.PostAvatar source={$avatar} />
+          <S.PostHeaderTexts>
+            <S.PostHeaderUsername>{$username}</S.PostHeaderUsername>
+            <S.PostHeaderUserRole>{$role}</S.PostHeaderUserRole>
+          </S.PostHeaderTexts>
+        </S.PostHeader>
+        <S.PostDescription>{$desc}</S.PostDescription>
+      </S.PostStyled>
+    </S.PostWrapper>
   );
 };

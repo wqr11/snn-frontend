@@ -6,6 +6,7 @@ export interface TypographyProps {
 }
 
 export const Typography = styled(Text)<TypographyProps>`
+  font-family: Commissioner;
   ${({ $variant, theme }) => {
     switch ($variant) {
       case "body-semibold":
