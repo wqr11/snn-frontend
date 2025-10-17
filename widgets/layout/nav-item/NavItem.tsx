@@ -1,5 +1,6 @@
 import { Icon, IconType } from '@/components'
-import { Text, TouchableOpacity } from 'react-native'
+import { StyledText } from '@/components/styled-text'
+import { TouchableOpacity } from 'react-native'
 
 import { styled } from 'styled-components/native'
 
@@ -21,14 +22,14 @@ export const NavItem = ({
 	return (
 		<StyledPressable paddingVertical={paddingVertical} onPress={onPress}>
 			{isIcon && <Icon name={icon} size={20} />}
-			<Text
+			<StyledText
 				style={{
 					fontSize: 16,
 					fontWeight: '500',
 				}}
 			>
 				{title}
-			</Text>
+			</StyledText>
 		</StyledPressable>
 	)
 }

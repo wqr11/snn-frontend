@@ -39,7 +39,7 @@ const Container = styled.View`
 	position: absolute;
 	left: 0;
 	top: 0;
-	background-color: #fff;
+	background-color: ${({ theme }) => theme.background};
 	width: ${width}px;
 	height: ${height}px;
 	z-index: 1000;

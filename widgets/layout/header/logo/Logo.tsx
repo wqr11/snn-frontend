@@ -1,14 +1,14 @@
-import { Text } from 'react-native'
+import { StyledText } from '@/components/styled-text'
 
 export const Logo = () => {
 	return (
-		<Text
+		<StyledText
 			style={{
 				fontSize: 30,
 				fontWeight: '600',
 			}}
 		>
 			Logo
-		</Text>
+		</StyledText>
 	)
 }

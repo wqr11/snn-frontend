@@ -1,8 +1,12 @@
 import { Divider, Icon, RightSlidePanel } from '@/components'
+import { OpacityText } from '@/components/opacity-text'
+import { StyledText } from '@/components/styled-text'
+import { themeModel } from '@/entities/theme'
+import { useUnit } from 'effector-react'
 import { Image } from 'expo-image'
 import { RelativePathString, useRouter } from 'expo-router'
 import { useState } from 'react'
-import { FlatList, Pressable, Text, View } from 'react-native'
+import { FlatList, Pressable, View } from 'react-native'
 import { styled } from 'styled-components/native'
 import { NavItem } from '../nav-item/NavItem'
 import { navList } from '../nav-list.data'
@@ -15,8 +19,12 @@ export const Header = () => {
 
 	const { navigate } = useRouter()
 
+	const themeMode = useUnit(themeModel.$themeMode)
+
+	const setThemeMode = useUnit(themeModel.setThemeMode)
+
 	return (
-		<View>
+		<StyledHeader>
 			<HeaderContainer>
 				<Logo />
 
@@ -40,25 +48,37 @@ export const Header = () => {
 				</View>
 
 				<UserContainer>
-					<Image
-						source={PersonImage}
-						alt='Person'
-						style={{ width: 68, height: 68 }}
-					/>
+					<PersonContainer>
+						<Image
+							source={PersonImage}
+							alt='Person'
+							style={{ width: 68, height: 68 }}
+						/>
 
-					<TextContainer>
-						<Text
-							style={{
-								fontWeight: '700',
-								fontSize: 16,
-								lineHeight: 16,
-							}}
+						<TextContainer>
+							<StyledText
+								style={{
+									fontWeight: '700',
+									fontSize: 16,
+									lineHeight: 16,
+								}}
+							>
+								Sophia Rose
+							</StyledText>
+
+							<OpacityText>UX/UI Designer</OpacityText>
+						</TextContainer>
+					</PersonContainer>
+
+					<View>
+						<StyledTouchableOpacity
+							onPress={() =>
+								setThemeMode(themeMode === 'dark' ? 'light' : 'dark')
+							}
 						>
-							Sophia Rose
-						</Text>
-
-						<Text>UX/UI Designer</Text>
-					</TextContainer>
+							<Icon name={themeMode === 'light' ? 'sun' : 'moon'} size={20} />
+						</StyledTouchableOpacity>
+					</View>
 				</UserContainer>
 
 				<Divider />
@@ -78,9 +98,13 @@ export const Header = () => {
 					<NavItem icon='arrow-left' onPress={() => {}} title='Выход' />
 				</NavListContainer>
 			</RightSlidePanel>
-		</View>
+		</StyledHeader>
 	)
 }
+
+const StyledHeader = styled.View`
+	background: ${({ theme }) => theme.background};
+`
 
 const HeaderContainer = styled.View`
 	flex-direction: row;
@@ -92,10 +116,25 @@ const HeaderContainer = styled.View`
 	padding: 12px 16px;
 `
 
+const StyledTouchableOpacity = styled.TouchableOpacity`
+	padding: 5px;
+	border-width: 1px;
+	border-color: ${({ theme }) => theme.grayScale.gray1};
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	justify-content: center;
+	align-items: center;
+`
+
 const UserContainer = styled.View`
-	padding-left: 51px;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0 51px;
+`
+
+const PersonContainer = styled.View`
 	gap: 20px;
-	padding-right: 41px;
 `
 
 const TextContainer = styled.View`
@@ -103,7 +142,6 @@ const TextContainer = styled.View`
 `
 
 const NavListContainer = styled.View`
-	padding-left: 51px;
-	padding-right: 41px;
+	padding: 0 51px;
 	gap: 30px;
 `

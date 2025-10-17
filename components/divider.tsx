@@ -2,7 +2,6 @@ import React from 'react'
 import { styled } from 'styled-components/native'
 
 interface IProps {
-	color?: string
 	margin?: {
 		top?: number
 		bottom?: number
@@ -10,16 +9,13 @@ interface IProps {
 }
 
 const StyledDivider = styled.View<IProps>`
-	background-color: ${props => props.color};
+	background-color: ${({ theme }) => theme.grayScale.gray1};
 	margin-top: ${({ margin }) => margin?.top};
 	margin-bottom: ${({ margin }) => margin?.bottom};
 	width: 100%;
 	height: 1px;
 `
 
-export const Divider = ({
-	color = '#E2E4E5',
-	margin = { bottom: 49, top: 28 },
-}: IProps) => {
-	return <StyledDivider color={color} margin={margin} />
+export const Divider = ({ margin = { bottom: 49, top: 28 } }: IProps) => {
+	return <StyledDivider margin={margin} />
 }

@@ -1,13 +1,17 @@
 import { FontAwesome6 } from '@expo/vector-icons'
+import styled from 'styled-components/native'
 
 export type IconType = React.ComponentProps<typeof FontAwesome6>['name']
 
 interface IProps {
 	name: IconType
-	color?: string
 	size?: number
 }
 
-export const Icon = ({ name, color = '#475569', size = 18 }: IProps) => {
-	return <FontAwesome6 name={name} color={color} size={size} />
+export const Icon = ({ name, size = 18 }: IProps) => {
+	return <StyledIcon name={name} size={size} />
 }
+
+const StyledIcon = styled(FontAwesome6)`
+	color: ${({ theme }) => theme.grayScale.gray1};
+`

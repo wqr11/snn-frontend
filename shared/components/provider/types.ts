@@ -3,8 +3,8 @@ export type Themes = {
 }
 
 export type Theme = {
-	white: string
-	black: string
+	background: string
+	foreground: string
 	accent: {
 		primary: string
 		primaryLight: string

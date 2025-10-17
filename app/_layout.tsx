@@ -1,38 +1,31 @@
 import { themeModel } from '@/entities/theme'
-import { ThemeProvider } from '@/shared/components/provider'
+import { ThemeProvider, THEMES } from '@/shared/components/provider'
 import { useUnit } from 'effector-react'
 import { Stack } from 'expo-router'
 
 import { Footer } from '@/widgets/layout/footer/Footer'
 import { Header } from '@/widgets/layout/header/Header'
 import { useEffect } from 'react'
-import { ScrollView, StatusBar } from 'react-native'
+import { StatusBar } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { styled } from 'styled-components/native'
 
 export default function RootLayout() {
 	const themeMode = useUnit(themeModel.$themeMode)
 
 	useEffect(() => {
-		if (themeMode === 'dark') {
-			StatusBar.setBarStyle('light-content')
+		StatusBar.setBackgroundColor(THEMES[themeMode].foreground)
 
-			StatusBar.setBackgroundColor('#f00')
+		StatusBar.setBarStyle(`${themeMode}-content`)
 
-			StatusBar.setTranslucent(false)
-		} else {
-			StatusBar.setBarStyle('dark-content')
-			StatusBar.setBackgroundColor('#fff')
-			StatusBar.setTranslucent(false)
-		}
+		StatusBar.setTranslucent(false)
 	}, [themeMode])
-
-	console.log(themeMode)
 
 	return (
 		<ThemeProvider mode={themeMode ?? 'light'}>
 			<SafeAreaProvider>
 				<SafeAreaView style={{ flex: 1 }}>
-					<ScrollView>
+					<StyledScrollView>
 						<Header />
 						<Stack
 							screenOptions={{
@@ -40,9 +33,13 @@ export default function RootLayout() {
 							}}
 						/>
 						<Footer />
-					</ScrollView>
+					</StyledScrollView>
 				</SafeAreaView>
 			</SafeAreaProvider>
 		</ThemeProvider>
 	)
 }
+
+const StyledScrollView = styled.View`
+	color: ${({ theme }) => theme.foreground};
+`
