@@ -51,40 +51,26 @@ export const Header = () => {
 
 	return (
 		<View>
-			<View
-				style={{
-					flexDirection: 'row',
-					alignItems: 'center',
-					justifyContent: 'space-between',
-					width: '100%',
-					position: 'relative',
-					zIndex: 1,
-					paddingVertical: 12,
-					paddingHorizontal: 16,
-					marginTop: 30,
-				}}
-			>
+			<HeaderContainer>
 				<Logo />
 
 				<Pressable onPress={() => setIsOpen(true)}>
 					<Icon name='bars' />
 				</Pressable>
-			</View>
+			</HeaderContainer>
 
 			<RightSlidePanel isOpen={isOpen}>
 				<View
 					style={{
 						flexDirection: 'row',
 						alignItems: 'center',
-						justifyContent: 'space-between',
-						paddingHorizontal: 12,
+						justifyContent: 'flex-end',
+						padding: 20,
 					}}
 				>
 					<Pressable onPress={() => setIsOpen(false)}>
-						<Icon name='xmark' />
+						<Icon name='xmark' size={20} />
 					</Pressable>
-
-					<Logo />
 				</View>
 
 				<UserContainer>
@@ -129,6 +115,16 @@ export const Header = () => {
 		</View>
 	)
 }
+
+const HeaderContainer = styled.View`
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	position: relative;
+	z-index: 1;
+	padding: 12px 16px;
+`
 
 const UserContainer = styled.View`
 	padding-left: 51px;

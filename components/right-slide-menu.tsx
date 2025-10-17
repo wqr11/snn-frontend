@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { Animated, Dimensions } from 'react-native'
 import { styled } from 'styled-components/native'
 
-const { width } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 
 interface IProps {
 	isOpen: boolean
@@ -36,11 +36,12 @@ export const RightSlidePanel = ({ isOpen, children }: IProps) => {
 }
 
 const Container = styled.View`
-	position: fixed;
+	position: absolute;
 	left: 0;
-	background-color: '#f00';
-	width: '100%';
-	height: '100%';
+	top: 0;
+	background-color: #fff;
+	width: ${width}px;
+	height: ${height}px;
 	z-index: 1000;
 `
 
