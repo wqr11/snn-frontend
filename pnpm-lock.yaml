@@ -26,6 +26,9 @@ importers:
       effector-react:
         specifier: ^23.3.0
         version: 23.3.0(effector@23.4.4)(react@19.1.0)
+      efforms:
+        specifier: ^1.0.1
+        version: 1.0.1(effector@23.4.4)
       expo:
         specifier: ~54.0.13
         version: 54.0.13(@babel/core@7.28.4)(@expo/metro-runtime@6.1.2)(expo-router@6.0.12)(react-native@0.81.4(@babel/core@7.28.4)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
@@ -2201,6 +2204,12 @@ packages:
   effector@23.4.4:
     resolution: {integrity: sha512-QkZboRN28K/iwxigDhlJcI3ux3aNbt8kYGGH/GkqWG0OlGeyuBhb7PdM89Iu+ogV8Lmz16xIlwnXR2UNWI6psg==}
     engines: {node: '>=11.0.0'}
+
+  efforms@1.0.1:
+    resolution: {integrity: sha512-QjO3PYiv8Yb1eciHMD55OiRgQVQuPhI1ZqGKdLy/YCi6QnQ2/BuwRAZjXG8WDFuQFjIPvRPR0YdvQtn2w2xncw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      effector: ^22.0.0 || ^23.0.0
 
   electron-to-chromium@1.5.237:
     resolution: {integrity: sha512-icUt1NvfhGLar5lSWH3tHNzablaA5js3HVHacQimfP8ViEBOQv+L7DKEuHdbTZ0SKCO1ogTJTIL1Gwk9S6Qvcg==}
@@ -7193,6 +7202,10 @@ snapshots:
       use-sync-external-store: 1.6.0(react@19.1.0)
 
   effector@23.4.4: {}
+
+  efforms@1.0.1(effector@23.4.4):
+    dependencies:
+      effector: 23.4.4
 
   electron-to-chromium@1.5.237: {}
 

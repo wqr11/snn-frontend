@@ -14,3 +14,5 @@ export class AuthApi {
     });
   }
 }
+
+export * from "./types";

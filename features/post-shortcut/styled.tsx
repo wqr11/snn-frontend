@@ -7,7 +7,7 @@ import { styled } from "styled-components/native";
 export const PostShortcutStyled = styled(View)`
   display: flex;
   flex-direction: column;
-  background-color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.background};
   padding: 10px;
   border-color: ${({ theme }) => theme.grayScale.gray2};
 `;
