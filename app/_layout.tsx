@@ -1,5 +1,5 @@
+import { ThemeProvider, THEMES } from "@/components/provider";
 import { themeModel } from "@/entities/theme";
-import { ThemeProvider, THEMES } from "@/shared/components/provider";
 import { useUnit } from "effector-react";
 import { Stack } from "expo-router";
 
