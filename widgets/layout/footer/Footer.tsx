@@ -34,4 +34,6 @@ const FooterContainer = styled.View`
 	left: 0;
 	z-index: 1000;
 	bottom: 0;
+	border-top-width: 1px;
+	border-top-color: ${({ theme }) => theme.grayScale.gray2};
 `

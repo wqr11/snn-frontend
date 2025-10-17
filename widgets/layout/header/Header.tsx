@@ -4,7 +4,7 @@ import { StyledText } from '@/components/styled-text'
 import { themeModel } from '@/entities/theme'
 import { useUnit } from 'effector-react'
 import { Image } from 'expo-image'
-import { RelativePathString, useRouter } from 'expo-router'
+import { RelativePathString, usePathname, useRouter } from 'expo-router'
 import { useState } from 'react'
 import { FlatList, Pressable, View } from 'react-native'
 import { styled } from 'styled-components/native'
@@ -22,6 +22,8 @@ export const Header = () => {
 	const themeMode = useUnit(themeModel.$themeMode)
 
 	const setThemeMode = useUnit(themeModel.setThemeMode)
+
+	const pathname = usePathname()
 
 	return (
 		<StyledHeader>
@@ -91,6 +93,8 @@ export const Header = () => {
 								{...item}
 								key={item.link}
 								onPress={() => navigate(item.link as RelativePathString)}
+								onClose={() => setIsOpen(false)}
+								isActive={item.link === pathname}
 							/>
 						)}
 					/>
@@ -114,6 +118,8 @@ const HeaderContainer = styled.View`
 	position: relative;
 	z-index: 1;
 	padding: 12px 16px;
+	border-bottom-width: 1px;
+	border-bottom-color: ${({ theme }) => theme.grayScale.gray2};
 `
 
 const StyledTouchableOpacity = styled.TouchableOpacity`

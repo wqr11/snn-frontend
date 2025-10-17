@@ -13,7 +13,7 @@ export const navList: NavItemType[] = [
 		link: '/',
 	},
 	{
-		icon: 'house',
+		icon: 'user',
 		title: 'Профиль',
 		link: '/profile',
 	},
