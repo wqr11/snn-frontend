@@ -4,8 +4,8 @@ import { ThemeMode } from "./types";
 
 export const THEMES = {
   light: {
-    white: "#FFFFFF",
-    black: "#1E232C",
+    background: "#FFFFFF",
+    foreground: "#1E232C",
     accent: {
       primary: "#9530F1",
       primaryLight: "#C48BF8",
@@ -17,8 +17,8 @@ export const THEMES = {
     },
   },
   dark: {
-    white: "#FFFFFF",
-    black: "#1E232C",
+    background: "#1E232C",
+    foreground: "#FFFFFF",
     accent: {
       primary: "#9530F1",
       primaryLight: "#C48BF8",
