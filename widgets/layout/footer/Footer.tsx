@@ -26,7 +26,7 @@ export const Footer = () => {
 }
 
 const FooterContainer = styled.View`
-	background-color: #fff;
+	background-color: ${({ theme }) => theme.background};
 	flex-direction: row;
 	justify-content: space-between;
 	padding: 12px 16px;
