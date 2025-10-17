@@ -41,5 +41,5 @@ export default function RootLayout() {
 }
 
 const StyledScrollView = styled.View`
-	color: ${({ theme }) => theme.foreground};
+	height: 100%;
 `

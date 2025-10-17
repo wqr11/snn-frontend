@@ -23,11 +23,6 @@ export const navList: NavItemType[] = [
 		link: '/groups',
 	},
 	{
-		icon: 'user',
-		title: 'Профиль',
-		link: '/profile',
-	},
-	{
 		icon: 'gear',
 		title: 'Настройки',
 		link: '/settings',

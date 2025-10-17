@@ -1,5 +1,4 @@
-import { RelativePathString, useRouter } from 'expo-router'
-import { FlatList } from 'react-native'
+import { RelativePathString, usePathname, useRouter } from 'expo-router'
 import { styled } from 'styled-components/native'
 import { NavItem } from '../nav-item/NavItem'
 import { navList } from '../nav-list.data'
@@ -7,20 +6,20 @@ import { navList } from '../nav-list.data'
 export const Footer = () => {
 	const { navigate } = useRouter()
 
+	const pathname = usePathname()
+
 	return (
 		<FooterContainer>
-			<FlatList
-				data={navList}
-				renderItem={({ item }: any) => (
-					<NavItem
-						key={item.link}
-						onPress={() => navigate(item.link as RelativePathString)}
-						{...item}
-						paddingVertical={10}
-						isIcon={false}
-					/>
-				)}
-			/>
+			{navList.map(item => (
+				<NavItem
+					key={item.link}
+					onPress={() => navigate(item.link as RelativePathString)}
+					{...item}
+					paddingVertical={10}
+					isText={false}
+					isActive={pathname === item.link}
+				/>
+			))}
 		</FooterContainer>
 	)
 }
@@ -29,5 +28,10 @@ const FooterContainer = styled.View`
 	background-color: ${({ theme }) => theme.background};
 	flex-direction: row;
 	justify-content: space-between;
-	padding: 12px 16px;
+	padding: 12px 34px;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	z-index: 1000;
+	bottom: 0;
 `
