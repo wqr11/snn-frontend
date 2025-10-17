@@ -1,48 +1,14 @@
-import { Divider, Icon, IconType } from '@/components'
-import { RightSlidePanel } from '@/components/right-slide-menu'
+import { Divider, Icon, RightSlidePanel } from '@/components'
 import { Image } from 'expo-image'
 import { RelativePathString, useRouter } from 'expo-router'
 import { useState } from 'react'
 import { FlatList, Pressable, Text, View } from 'react-native'
 import { styled } from 'styled-components/native'
+import { NavItem } from '../nav-item/NavItem'
+import { navList } from '../nav-list.data'
 import { Logo } from './logo/Logo'
-import { NavItem } from './nav-item/NavItem'
 
 const PersonImage = require('@/assets/images/person.png')
-
-type NavItemType = {
-	icon: IconType
-	title: string
-	link: string
-}
-
-const navList: NavItemType[] = [
-	{
-		icon: 'book',
-		title: 'Лента',
-		link: '/',
-	},
-	{
-		icon: 'house',
-		title: 'Профиль',
-		link: '/profile',
-	},
-	{
-		icon: 'users',
-		title: 'Группы',
-		link: '/groups',
-	},
-	{
-		icon: 'user',
-		title: 'Профиль',
-		link: '/profile',
-	},
-	{
-		icon: 'gear',
-		title: 'Настройки',
-		link: '/settings',
-	},
-]
 
 export const Header = () => {
 	const [isOpen, setIsOpen] = useState(false)
