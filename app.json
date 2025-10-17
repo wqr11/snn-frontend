@@ -38,6 +38,27 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/Commisioner.ttf"],
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "Commisioner",
+                "fontDefinitions": [
+                  {
+                    "path": "./assets/Commisioner.ttf"
+                  }
+                ]
+              }
+            ]
+          },
+          "ios": {
+            "fonts": ["./assets/Commisioner.ttf"]
+          }
+        }
       ]
     ],
     "experiments": {

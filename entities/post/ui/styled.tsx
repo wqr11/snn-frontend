@@ -1,14 +1,25 @@
-import { Typography } from "@/shared/components";
+import { Typography } from "@/components";
 import { Image } from "expo-image";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 import { styled } from "styled-components/native";
 
+export const PostWrapper = styled(Pressable).attrs(({ theme }) => ({
+  android_ripple: {
+    color: theme.grayScale.gray1,
+    foreground: true,
+    borderless: false,
+  },
+}))`
+  background-color: white;
+  overflow: hidden;
+`;
+
 export const PostStyled = styled(View)`
+  min-height: 160px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding: 16px;
-  background-color: ${({ theme }) => theme.white};
   border-color: ${({ theme }) => theme.grayScale.gray2};
 `;
 
@@ -21,7 +32,7 @@ export const PostHeader = styled(View)`
 export const PostAvatar = styled(Image)`
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 40px;
   background-color: ${({ theme }) => theme.grayScale.gray2};
 `;
 
