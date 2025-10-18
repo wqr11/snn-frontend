@@ -1,4 +1,5 @@
 import { Divider, Icon } from '@/components'
+import { Accordion } from '@/components/accordion'
 import { OpacityText } from '@/components/opacity-text'
 import { SearchField } from '@/components/search-field'
 import { StyledText } from '@/components/styled-text'
@@ -7,8 +8,9 @@ import { StatItem } from '@/entities/profile'
 import { PostShortcut } from '@/features/post-shortcut'
 import { Image } from 'expo-image'
 import { Fragment } from 'react'
-import { ScrollView, TouchableOpacity, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { styled } from 'styled-components/native'
+import { ContactList, ContactType } from './styled'
 
 const PersonImage = require('@/assets/images/person.png')
 
@@ -31,6 +33,21 @@ const data = [
 ]
 
 const list = ['amazing', 'great', 'lifetime', 'uiux', 'machinelearning']
+
+const contacts: ContactType[] = [
+	{
+		type: 'phone',
+		value: '+7 (900)354-23-12',
+	},
+	{
+		type: 'email',
+		value: 'hello@yandex.com',
+	},
+	{
+		type: 'web-site',
+		value: 'www.yandex.com',
+	},
+]
 
 export const ProfilePageUI = () => (
 	<ScrollView>
@@ -118,30 +135,34 @@ export const ProfilePageUI = () => (
 				))}
 			</Container>
 
-			<BorderContainer marginBottom={32}>
-				<Container
-					style={{
-						paddingTop: 16,
-						paddingBottom: 16,
-					}}
-				>
-					<TouchableOpacity
-						style={{
-							flexDirection: 'row',
-							alignItems: 'center',
-							justifyContent: 'space-between',
-						}}
-					>
-						<StyledText style={{ fontSize: 16, fontWeight: '700' }}>
-							Контактная информация
-						</StyledText>
+			<Accordion
+				items={[
+					{
+						id: 'Contact Info',
+						content: <ContactList contacts={contacts} />,
+						header: isOpen => (
+							<BorderContainer
+								marginBottom={isOpen ? 10 : 0}
+								style={{
+									flexDirection: 'row',
+									alignItems: 'center',
+									justifyContent: 'space-between',
+									paddingHorizontal: 8,
+									paddingVertical: 16,
+								}}
+							>
+								<StyledText style={{ fontSize: 16, fontWeight: '700' }}>
+									Контактная информация
+								</StyledText>
 
-						<Icon name={'chevron-down'} />
-					</TouchableOpacity>
-				</Container>
-			</BorderContainer>
+								<Icon name={isOpen ? 'chevron-up' : 'chevron-down'} />
+							</BorderContainer>
+						),
+					},
+				]}
+			/>
 
-			<Container style={{ marginBottom: 32 }}>
+			<Container style={{ marginVertical: 32 }}>
 				<SearchField placeholder='Введите название поста' />
 			</Container>
 
