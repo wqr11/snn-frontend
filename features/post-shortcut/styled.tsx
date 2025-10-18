@@ -1,32 +1,16 @@
-<<<<<<< HEAD
-import { Icon, Typography } from '@/components'
+import { Typography } from '@/components'
 import { Button } from '@/components/button'
 import { FontAwesome6 } from '@expo/vector-icons'
-import { ButtonProps, TextInput, View } from 'react-native'
+import { ButtonProps, StyleSheet, TextInput, View } from 'react-native'
 import { styled } from 'styled-components/native'
 
 export const PostShortcutStyled = styled(View)`
 	display: flex;
 	flex-direction: column;
 	background-color: ${({ theme }) => theme.background};
-	padding: 10px;
+	padding: 16px;
 	border-color: ${({ theme }) => theme.grayScale.gray2};
 `
-=======
-import { Typography } from "@/components";
-import { Button } from "@/components/button";
-import { FontAwesome6 } from "@expo/vector-icons";
-import { ButtonProps, StyleSheet, TextInput, View } from "react-native";
-import { styled } from "styled-components/native";
-
-export const PostShortcutStyled = styled(View)`
-  display: flex;
-  flex-direction: column;
-  background-color: ${({ theme }) => theme.background};
-  padding: 16px;
-  border-color: ${({ theme }) => theme.grayScale.gray2};
-`;
->>>>>>> origin/main
 
 export const PostShortcutMain = styled(View)`
 	display: flex;
@@ -53,7 +37,8 @@ export const PostShortcutBottom = styled(View)`
 export const PostShortcutAttachmentButton = styled(Button).attrs({
 	children: <FontAwesome6 name='paperclip' size={20} />,
 })`
-<<<<<<< HEAD
+	width: 52px;
+	height: 52px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -61,68 +46,37 @@ export const PostShortcutAttachmentButton = styled(Button).attrs({
 	background-color: ${({ theme }) => theme.grayScale.gray2};
 `
 
+const styles = StyleSheet.create({
+	bold: {
+		fontSize: 20,
+	},
+})
+
 export interface PostShortcutSendButton extends Omit<ButtonProps, 'children'> {
 	children: React.ReactNode
 }
 
-export const PostShortcutSendButton = styled(Button).attrs(({ children }) => ({
-	children: (
-		<>
-			<Typography $variant='body-semibold'>{children}</Typography>
-			<Icon name={'paper-plane'} />
-		</>
-	),
-}))`
+export const PostShortcutSendButton = styled(Button).attrs(
+	({ theme, children }) => ({
+		children: (
+			<>
+				<Typography
+					$variant='semibold'
+					$color={theme.background}
+					style={styles.bold}
+				>
+					{children}
+				</Typography>
+			</>
+		),
+	})
+)`
+	margin-top: 20px;
 	display: flex;
 	flex-direction: row;
 	gap: 8px;
 	align-items: center;
-	padding: 10px 16px;
-	border-radius: 1234px;
-	background-color: ${({ theme }) => theme.grayScale.gray2};
+	padding: 14px 28px;
+	border-radius: 34px;
+	background-color: ${({ theme }) => theme.accent.primary};
 `
-=======
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  background-color: ${({ theme }) => theme.grayScale.gray2};
-`;
-
-const styles = StyleSheet.create({
-  bold: {
-    fontSize: 20,
-  },
-});
-
-export interface PostShortcutSendButton extends Omit<ButtonProps, "children"> {
-  children: React.ReactNode;
-}
-
-export const PostShortcutSendButton = styled(Button).attrs(
-  ({ theme, children }) => ({
-    children: (
-      <>
-        <Typography
-          $variant="semibold"
-          $color={theme.background}
-          style={styles.bold}
-        >
-          {children}
-        </Typography>
-      </>
-    ),
-  })
-)`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
-  padding: 14px 28px;
-  border-radius: 34px;
-  background-color: ${({ theme }) => theme.accent.primary};
-`;
->>>>>>> origin/main

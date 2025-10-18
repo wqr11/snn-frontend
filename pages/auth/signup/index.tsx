@@ -1,99 +1,99 @@
-import { BackButton } from "@/components/back-button";
-import { useForm } from "effector-forms";
-import { useTheme } from "styled-components/native";
-import { $form } from "./model";
-import * as S from "./styled";
+import { BackButton } from '@/components/back-button'
+import { useForm } from 'effector-forms'
+import { useTheme } from 'styled-components/native'
+import { $form } from './model'
+import * as S from './styled'
 
-import { Typography } from "@/components";
-import { Field } from "@/components/field";
-import { Switch } from "@/components/switch";
-import { authModel } from "@/entities/auth";
-import { useUnit } from "effector-react";
-import { Stack, router } from "expo-router";
-import { useCallback } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { Typography } from '@/components'
+import { Field } from '@/components/field'
+import { Switch } from '@/components/switch'
+import { authModel } from '@/entities/auth'
+import { useUnit } from 'effector-react'
+import { Stack, router } from 'expo-router'
+import { useCallback } from 'react'
+import { ScrollView, StyleSheet } from 'react-native'
 
 export const SignUpPageUI = () => {
-  const theme = useTheme();
+	const theme = useTheme()
 
-  const isAuth = useUnit(authModel.$isAuth);
-  const form = useForm($form);
+	const isAuth = useUnit(authModel.$isAuth)
+	const form = useForm($form)
 
-  const styles = StyleSheet.create({
-    title: {
-      marginTop: !isAuth ? 40 : 0,
-      marginBottom: 20,
-    },
-    centerText: {
-      marginInline: "auto",
-    },
-    right: {
-      marginLeft: "auto",
-    },
-  });
+	const styles = StyleSheet.create({
+		title: {
+			marginTop: !isAuth ? 40 : 0,
+			marginBottom: 20,
+		},
+		centerText: {
+			marginInline: 'auto',
+		},
+		right: {
+			marginLeft: 'auto',
+		},
+	})
 
-  const handlePress = useCallback(() => {
-    router.replace("/");
-  }, []);
+	const handlePress = useCallback(() => {
+		router.replace('/')
+	}, [])
 
-  return (
-    <ScrollView>
-      <S.SignUpPageStyled>
-        <Stack.Screen
-          options={{
-            title: "sign-up",
-          }}
-        />
-        {isAuth && <BackButton onPress={handlePress} />}
-        <S.SignUpPageTitle style={styles.title}>Регистрация</S.SignUpPageTitle>
-        <Switch
-          label="Аккаунт сообщества"
-          value={form.fields.isGroup.value}
-          onValueChange={form.fields.isGroup.onChange}
-          style={styles.right}
-        />
-        <Field
-          error={form.fields.name.errors?.[0]?.errorText}
-          placeholder="Ваше имя"
-          onChangeText={form.fields.email.onChange}
-        />
-        <Field
-          error={form.fields.email.errors?.[0]?.errorText}
-          placeholder="Email"
-          onChangeText={form.fields.email.onChange}
-        />
-        <Field
-          error={form.fields.password.errors?.[0]?.errorText}
-          placeholder="Пароль"
-          onChangeText={form.fields.password.onChange}
-        />
-        <Field
-          error={form.fields.confirmPassword.errors?.[0]?.errorText}
-          placeholder="Подтвердите пароль"
-          onChangeText={form.fields.confirmPassword.onChange}
-        />
-        <S.SignUpButton $rippleColor={theme.background}>
-          <Typography
-            $variant="semibold"
-            $color={theme.background}
-            onPress={() => form.submit()}
-          >
-            Зарегаться
-          </Typography>
-        </S.SignUpButton>
-        <S.SignInLink
-          $rippleColor={theme.background}
-          onPress={() => router.push("/sign-in")}
-        >
-          <Typography
-            $variant="semibold"
-            $color={theme.foreground}
-            style={styles.centerText}
-          >
-            Войти
-          </Typography>
-        </S.SignInLink>
-      </S.SignUpPageStyled>
-    </ScrollView>
-  );
-};
+	return (
+		<ScrollView>
+			<S.SignUpPageStyled>
+				<Stack.Screen
+					options={{
+						title: 'sign-up',
+					}}
+				/>
+				{isAuth && <BackButton onPress={handlePress} />}
+				<S.SignUpPageTitle style={styles.title}>Регистрация</S.SignUpPageTitle>
+				<Switch
+					label='Аккаунт сообщества'
+					value={form.fields.isGroup.value}
+					onValueChange={form.fields.isGroup.onChange}
+					style={styles.right}
+				/>
+				<Field
+					error={form.fields.name.errors?.[0]?.errorText}
+					placeholder='Ваше имя'
+					onChangeText={form.fields.name.onChange}
+				/>
+				<Field
+					error={form.fields.email.errors?.[0]?.errorText}
+					placeholder='Email'
+					onChangeText={form.fields.email.onChange}
+				/>
+				<Field
+					error={form.fields.password.errors?.[0]?.errorText}
+					placeholder='Пароль'
+					onChangeText={form.fields.password.onChange}
+				/>
+				<Field
+					error={form.fields.confirmPassword.errors?.[0]?.errorText}
+					placeholder='Подтвердите пароль'
+					onChangeText={form.fields.confirmPassword.onChange}
+				/>
+				<S.SignUpButton $rippleColor={theme.background}>
+					<Typography
+						$variant='semibold'
+						$color={theme.background}
+						onPress={() => form.submit()}
+					>
+						Зарегаться
+					</Typography>
+				</S.SignUpButton>
+				<S.SignInLink
+					$rippleColor={theme.background}
+					onPress={() => router.push('/sign-in')}
+				>
+					<Typography
+						$variant='semibold'
+						$color={theme.foreground}
+						style={styles.centerText}
+					>
+						Войти
+					</Typography>
+				</S.SignInLink>
+			</S.SignUpPageStyled>
+		</ScrollView>
+	)
+}

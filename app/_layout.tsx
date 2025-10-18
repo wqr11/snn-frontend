@@ -2,7 +2,6 @@ import { ThemeProvider, THEMES } from '@/components/provider'
 import { themeModel } from '@/entities/theme'
 import { useGate, useUnit } from 'effector-react'
 
-import { authModel } from '@/entities/auth'
 import { InitGate } from '@/entities/init'
 import { Footer } from '@/widgets/layout/footer/Footer'
 import { Header } from '@/widgets/layout/header/Header'
@@ -12,13 +11,21 @@ import { StatusBar } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { styled } from 'styled-components/native'
 
+const SCREEN_ORDER = {
+	index: 0,
+	feed: 1,
+	profile: 2,
+}
+
 export default function RootLayout() {
 	useGate(InitGate)
 
 	const themeMode = useUnit(themeModel.$themeMode)
 	const theme = useMemo(() => THEMES[themeMode], [themeMode])
 
-	const isAuth = useUnit(authModel.$isAuth)
+	// const isAuth = useUnit(authModel.$isAuth)
+
+	const isAuth = true
 
 	useEffect(() => {
 		StatusBar.setBackgroundColor(THEMES[themeMode].foreground)
@@ -44,7 +51,7 @@ export default function RootLayout() {
 						<Header />
 						<Stack
 							screenOptions={{
-								animation: 'slide_from_left',
+								animation: 'slide_from_right',
 								animationTypeForReplace: 'pop',
 								animationDuration: 300,
 								headerShown: false,

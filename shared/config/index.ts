@@ -1,6 +1,6 @@
 import Config from "react-native-config";
 
-export const API_BASE_URL = Config.API_BASE_URL!;
+export const API_BASE_URL = "http://148.253.210.5:8000";
 
 export enum LOCAL_SAVED_KEYS {
   ACCESS_TOKEN = "ACCESS_TOKEN",

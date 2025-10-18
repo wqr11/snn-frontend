@@ -2,8 +2,8 @@ import { Button } from '@/components/button'
 import { themeModel } from '@/entities/theme'
 import { FontAwesome6 } from '@expo/vector-icons'
 import { useUnit } from 'effector-react'
-import { useRouter } from 'expo-router'
-import { useState } from 'react'
+import { usePathname, useRouter } from 'expo-router'
+import { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { styled } from 'styled-components/native'
 import { Logo } from './logo/Logo'
@@ -17,6 +17,12 @@ export const Header = () => {
 
 	const themeMode = useUnit(themeModel.$themeMode)
 	const setThemeMode = useUnit(themeModel.setThemeMode)
+
+	const pathname = usePathname()
+
+	useEffect(() => {
+		setIsOpen(false)
+	}, [pathname])
 
 	const styles = StyleSheet.create({
 		menu: {
@@ -39,7 +45,6 @@ export const Header = () => {
 }
 
 const StyledHeader = styled.View`
-	padding-top: 42px;
 	background: ${({ theme }) => theme.background};
 `
 
