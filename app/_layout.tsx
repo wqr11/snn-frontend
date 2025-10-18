@@ -11,13 +11,6 @@ import { useEffect, useMemo } from "react";
 import { StatusBar } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { styled } from "styled-components/native";
-import ToastManager from "toastify-react-native";
-
-const SCREEN_ORDER = {
-  index: 0,
-  feed: 1,
-  profile: 2,
-};
 
 export default function RootLayout() {
   useGate(InitGate);
@@ -51,7 +44,7 @@ export default function RootLayout() {
             <Header />
             <Stack
               screenOptions={{
-                animation: "slide_from_right",
+                animation: "fade_from_bottom",
                 animationTypeForReplace: "pop",
                 animationDuration: 300,
                 headerShown: false,
@@ -61,15 +54,13 @@ export default function RootLayout() {
               }}
               initialRouteName="index"
             >
-              <Stack.Screen name="sign-in" />
-              <Stack.Screen name="sign-up" />
+              <Stack.Screen name="auth" />
               <Stack.Screen name="feed" options={{}}></Stack.Screen>
               <Stack.Screen name="profile" options={{}}></Stack.Screen>
             </Stack>
             {isAuth && <Footer />}
           </StyledScrollView>
         </SafeAreaView>
-        <ToastManager />
       </SafeAreaProvider>
     </ThemeProvider>
   );

@@ -41,7 +41,4 @@ const FooterContainer = styled(View)`
   padding: 8px 34px 8px 34px;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.background};
-  position: sticky;
-  bottom: 0;
-  left: 0;
 `;

@@ -63,7 +63,7 @@ export const $tokens = createStore<{
   .on(signInFx.doneData, (state, data) => data)
   .on(getAccessFromLocalFx.doneData, (_, data) => data);
 
-export const $isAuth = combine($tokens, (token) => !!token);
+export const $isAuth = combine($tokens, (tokens) => !!tokens?.access_token);
 
 export const $isAuthChecked = createStore(false).on(
   getAccessFromLocalFx.finally,

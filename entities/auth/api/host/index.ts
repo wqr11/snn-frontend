@@ -10,9 +10,14 @@ export const $authHost = async (url: string, options?: RequestInit) => {
   if (!tokens?.access_token) {
     authModel.getAccessFromLocalFx();
 
-    tokens = JSON.parse(
-      (await AsyncStorage.getItem(LOCAL_SAVED_KEYS.ACCESS_TOKEN)) ?? "{}"
+    const access_token = await AsyncStorage.getItem(
+      LOCAL_SAVED_KEYS.ACCESS_TOKEN
     );
+    const refresh_token = await AsyncStorage.getItem(
+      LOCAL_SAVED_KEYS.REFRESH_TOKEN
+    );
+
+    tokens = { access_token, refresh_token };
   }
 
   return await (

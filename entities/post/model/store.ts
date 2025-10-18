@@ -1,4 +1,3 @@
-import { InitGate } from "@/entities/init";
 import {
   attach,
   createEffect,
@@ -37,7 +36,7 @@ export const getPosts = attach({
 });
 
 sample({
-  clock: [incrementPage, InitGate.open],
+  clock: incrementPage,
   target: getPosts,
 });
 
