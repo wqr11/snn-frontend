@@ -1,19 +1,13 @@
 import { LOCAL_SAVED_KEYS } from "@/shared/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  combine,
-  createEffect,
-  createEvent,
-  createStore,
-  sample,
-} from "effector";
+import { createEffect, createEvent, createStore, sample } from "effector";
 import {
   AuthApi,
   SignInParams,
   SignInResult,
   SignUpParams,
   SignUpResult,
-} from "..";
+} from "../api";
 
 export const getAccessFromLocalFx = createEffect(async () => {
   const access_token = await AsyncStorage.getItem(
@@ -56,14 +50,17 @@ export const signUpFx = createEffect<SignUpParams, SignUpResult, Error>(
   }
 );
 
+export const refreshFx = createEffect(async () => {
+  return await AuthApi.refresh();
+});
+
 export const $tokens = createStore<{
   access_token: string | null;
   refresh_token?: string | null;
 } | null>(null)
-  .on(signInFx.doneData, (state, data) => data)
+  .on(refreshFx.doneData, (_, data) => data)
+  .on(signInFx.doneData, (_, data) => data)
   .on(getAccessFromLocalFx.doneData, (_, data) => data);
-
-export const $isAuth = combine($tokens, (tokens) => !!tokens?.access_token);
 
 export const $isAuthChecked = createStore(false).on(
   getAccessFromLocalFx.finally,
@@ -79,4 +76,8 @@ export const $authModalType = createStore<"signin" | "signup">("signin").on(
 sample({
   source: signInFx.doneData,
   target: setAccessToLocalFx,
+});
+
+sample({
+  clock: signUpFx.doneData,
 });

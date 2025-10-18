@@ -1,4 +1,5 @@
-import { API_BASE_URL } from "@/shared/config";
+import { API_BASE_URL, LOCAL_SAVED_KEYS } from "@/shared/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   SignInParams,
   SignInResult,
@@ -7,6 +8,24 @@ import {
 } from "./types";
 
 export class AuthApi {
+  static async refresh(): Promise<SignInResult> {
+    const refresh = await AsyncStorage.getItem(LOCAL_SAVED_KEYS.REFRESH_TOKEN);
+
+    const res = await fetch(`${API_BASE_URL}/refresh`, {
+      method: "POST",
+      headers: {
+        // Тут смотрит в куки ???
+        Authorization: `Bearer ${refresh}`,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Ошибка при рефреше");
+    }
+
+    return await res.json();
+  }
+
   static async signIn(params: SignInParams): Promise<SignInResult> {
     const data = await (
       await fetch(`${API_BASE_URL}/login`, {

@@ -1,3 +1,4 @@
+import { notificationModel } from "@/entities/notification";
 import {
   attach,
   createEffect,
@@ -5,7 +6,6 @@ import {
   createStore,
   sample,
 } from "effector";
-import { Toast } from "toastify-react-native";
 import { CreatePostParams, PostApi } from "../api";
 import { IPost } from "./types";
 
@@ -21,7 +21,7 @@ export const createPostFx = createEffect(async (params: CreatePostParams) => {
 
 export const $posts = createStore<IPost[]>([]).on(
   getPostsFx.doneData,
-  (state, data) => [...state, ...(data.posts ?? [])]
+  (state, data) => [...new Set([...state, ...(data.posts ?? [])])]
 );
 
 export const incrementPage = createEvent<void>();
@@ -42,12 +42,14 @@ sample({
 
 sample({
   clock: createPostFx.doneData,
-  fn: () => Toast.success("Пост создан", "top"),
+  target: notificationModel.notifyFx.prepend(
+    (d) => `Пост создан ${JSON.stringify(d)}`
+  ),
 });
 
 sample({
   clock: createPostFx.failData,
-  fn: (d) => Toast.error(`Ошибка при создании: ${d.message}`, "top"),
+  target: notificationModel.notifyFx.prepend((e: Error) => "Ошибка"),
 });
 
 export * from "./types";
