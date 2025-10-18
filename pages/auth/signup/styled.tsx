@@ -3,7 +3,7 @@ import { Button } from "@/components/button";
 import { View } from "react-native";
 import { styled } from "styled-components/native";
 
-export const SignInPageStyled = styled(View)`
+export const SignUpPageStyled = styled(View)`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -12,11 +12,11 @@ export const SignInPageStyled = styled(View)`
   background-color: ${({ theme }) => theme.background};
 `;
 
-export const SignInPageTitle = styled(Typography).attrs({
+export const SignUpPageTitle = styled(Typography).attrs({
   $variant: "h1",
 })``;
 
-export const SignInButton = styled(Button)`
+export const SignUpButton = styled(Button)`
   margin-top: 24px;
   display: flex;
   align-items: center;

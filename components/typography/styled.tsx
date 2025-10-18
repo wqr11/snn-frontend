@@ -2,14 +2,16 @@ import { Text } from "react-native";
 import { css, styled } from "styled-components/native";
 
 export interface TypographyProps {
-  $variant?: "body-regular" | "body-semibold" | "body-thin" | "h1";
+  $variant?: "regular" | "semibold" | "thin" | "h1";
   $color?: string;
+  $size?: number;
+  $weight?: number;
 }
 
 export const Typography = styled(Text)<TypographyProps>`
   font-family: Commissioner;
   color: ${({ theme, $color }) => $color ?? theme.foreground};
-  ${({ $variant, theme }) => {
+  ${({ $variant }) => {
     switch ($variant) {
       case "h1":
         return css`
@@ -17,21 +19,20 @@ export const Typography = styled(Text)<TypographyProps>`
           font-weight: 700;
           line-height: 42px;
         `;
-      case "body-semibold":
+      case "semibold":
         return css`
           font-size: 16px;
           font-height: 22px;
           font-weight: 700;
         `;
-      case "body-thin":
+      case "thin":
         return css`
           font-size: 16px;
           font-height: 22px;
           font-weight: 400;
-          color: ${theme.grayScale.gray1};
         `;
       default:
-      case "body-regular":
+      case "regular":
         return css`
           font-size: 16px;
           font-height: 22px;
@@ -39,4 +40,14 @@ export const Typography = styled(Text)<TypographyProps>`
         `;
     }
   }}
+  ${({ $size }) =>
+    $size &&
+    css`
+      font-size: ${$size}px !important;
+    `}
+    ${({ $weight }) =>
+    $weight &&
+    css`
+      font-size: ${$weight}px !important;
+    `}
 `;

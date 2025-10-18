@@ -1,9 +1,22 @@
-import { InitGate } from "@/entities/init";
+import { authModel } from "@/entities/auth";
 import { MainPageUI } from "@/pages/main";
-import { useGate } from "effector-react";
+import { useUnit } from "effector-react";
+import { router } from "expo-router";
+import { useEffect } from "react";
 
 export default function Index() {
-  useGate(InitGate);
+  const isAuth = useUnit(authModel.$isAuth);
+  const isAuthChecked = useUnit(authModel.$isAuthChecked);
+
+  useEffect(() => {
+    if (isAuthChecked && !isAuth) {
+      router.replace("/sign-in");
+    }
+  }, [isAuth, isAuthChecked]);
+
+  if (!isAuthChecked) {
+    return null;
+  }
 
   return <MainPageUI />;
 }

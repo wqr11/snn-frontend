@@ -1,40 +1,74 @@
-import { Typography } from "@/components";
 import { BackButton } from "@/components/back-button";
-import { Field } from "@/components/field";
-import { useUnit } from "effector-react";
-import { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { useForm } from "effector-forms";
 import { useTheme } from "styled-components/native";
 import { $form } from "./model";
 import * as S from "./styled";
 
-const styles = StyleSheet.create({
-  signInText: {
-    marginInline: "auto",
-  },
-});
+import { Typography } from "@/components";
+import { Field } from "@/components/field";
+import { authModel } from "@/entities/auth";
+import { useUnit } from "effector-react";
+import { Stack, useRouter } from "expo-router";
+import { ScrollView, StyleSheet } from "react-native";
 
 export const SignInPageUI = () => {
   const theme = useTheme();
+  const router = useRouter();
 
-  const handlers = $form.$handlers;
-  const fields = useUnit($form.$fields);
+  const isAuth = useUnit(authModel.$isAuth);
+  const form = useForm($form);
 
-  useEffect(() => {
-    console.log(fields);
-  }, [fields]);
+  const styles = StyleSheet.create({
+    title: {
+      marginTop: !isAuth ? 40 : 0,
+      marginBottom: 20,
+    },
+    centerText: {
+      marginInline: "auto",
+    },
+  });
 
   return (
-    <S.SignInPageStyled>
-      <BackButton />
-      <S.SignInPageTitle>Hello bitch!</S.SignInPageTitle>
-      <Field placeholder="Email" onChangeText={handlers.email} />
-      <Field placeholder="Password" onChangeText={handlers.password} />
-      <S.SignInButton>
-        <Typography $variant="body-semibold" style={styles.signInText}>
-          Submit
-        </Typography>
-      </S.SignInButton>
-    </S.SignInPageStyled>
+    <ScrollView>
+      <S.SignInPageStyled>
+        <Stack.Screen
+          options={{
+            title: "sign-in",
+          }}
+        />
+        {isAuth && <BackButton onPress={() => router.push("/")} />}
+        <S.SignInPageTitle style={styles.title}>Логин</S.SignInPageTitle>
+        <Field
+          error={form.fields.email.errors?.[0]?.errorText}
+          placeholder="Email"
+          onChangeText={form.fields.email.onChange}
+        />
+        <Field
+          error={form.fields.password.errors?.[0]?.errorText}
+          placeholder="Password"
+          onChangeText={form.fields.password.onChange}
+        />
+        <S.SignInButton
+          $rippleColor={theme.background}
+          onPress={() => form.submit()}
+        >
+          <Typography $variant="semibold" $color={theme.background}>
+            Войти
+          </Typography>
+        </S.SignInButton>
+        <S.SignInLink
+          $rippleColor={theme.background}
+          onPress={() => router.push("/sign-up")}
+        >
+          <Typography
+            $variant="semibold"
+            $color={theme.foreground}
+            style={styles.centerText}
+          >
+            Зарегистрироваться
+          </Typography>
+        </S.SignInLink>
+      </S.SignInPageStyled>
+    </ScrollView>
   );
 };

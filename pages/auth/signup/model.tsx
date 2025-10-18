@@ -4,6 +4,19 @@ import { createForm } from "effector-forms";
 
 export const $form = createForm({
   fields: {
+    isGroup: {
+      init: false,
+    },
+    name: {
+      init: "",
+      rules: [
+        {
+          name: "required",
+          validator: (val) => !!val,
+          errorText: "Пароль обязателен",
+        },
+      ],
+    },
     email: {
       init: "",
       rules: [
@@ -26,6 +39,21 @@ export const $form = createForm({
           name: "required",
           validator: (val) => !!val,
           errorText: "Пароль обязателен",
+        },
+      ],
+    },
+    confirmPassword: {
+      init: "",
+      rules: [
+        {
+          name: "required",
+          validator: (val) => !!val,
+          errorText: "Пароль обязателен",
+        },
+        {
+          name: "equals-pass",
+          validator: (val, form) => val === form.password,
+          errorText: "Пароли не совпадают",
         },
       ],
     },

@@ -1,9 +1,8 @@
-import { Pressable } from "react-native";
+import { Pressable, PressableProps } from "react-native";
 import { styled } from "styled-components/native";
 
-export interface ButtonProps {
+export interface ButtonProps extends PressableProps {
   $rippleColor?: string;
-  $styles?: string;
 }
 
 export const Button = styled(Pressable).attrs<ButtonProps>(
@@ -16,5 +15,4 @@ export const Button = styled(Pressable).attrs<ButtonProps>(
 )`
   overflow: hidden;
   padding: 10px 14px;
-  ${({ $styles }) => $styles};
 `;

@@ -21,7 +21,7 @@ export const Post: React.FC<PostProps> = ({
   $username,
 }) => {
   return (
-    <S.PostWrapper onPress={() => console.log("ASd")}>
+    <S.PostWrapper>
       <S.PostStyled style={styles.post}>
         <S.PostHeader>
           <S.PostAvatar source={$avatar} />

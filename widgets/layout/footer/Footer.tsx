@@ -1,37 +1,47 @@
-import { RelativePathString, usePathname, useRouter } from 'expo-router'
-import { styled } from 'styled-components/native'
-import { NavItem } from '../nav-item/NavItem'
-import { navList } from '../nav-list.data'
+import { RelativePathString, usePathname, useRouter } from "expo-router";
+import { StyleSheet, View } from "react-native";
+import { styled, useTheme } from "styled-components/native";
+import { NavItem } from "../nav-item/NavItem";
+import { navList } from "../nav-list.data";
 
 export const Footer = () => {
-	const { navigate } = useRouter()
+  const theme = useTheme();
 
-	const pathname = usePathname()
+  const { navigate } = useRouter();
 
-	return (
-		<FooterContainer>
-			{navList.map(item => (
-				<NavItem
-					key={item.link}
-					onPress={() => navigate(item.link as RelativePathString)}
-					{...item}
-					paddingVertical={10}
-					isText={false}
-					isActive={pathname === item.link}
-				/>
-			))}
-		</FooterContainer>
-	)
-}
+  const pathname = usePathname();
 
-const FooterContainer = styled.View`
-	background-color: ${({ theme }) => theme.background};
-	flex-direction: row;
-	justify-content: space-between;
-	padding: 12px 34px;
-	width: 100%;
-	position: absolute;
-	left: 0;
-	z-index: 1000;
-	bottom: 0;
-`
+  const styles = StyleSheet.create({
+    footer: {
+      borderTopWidth: 1,
+      borderTopColor: theme.grayScale.gray2,
+    },
+  });
+
+  return (
+    <FooterContainer style={styles.footer}>
+      {navList.map((item) => (
+        <NavItem
+          key={item.title}
+          onPress={() => navigate(item.link as RelativePathString)}
+          isText={false}
+          isActive={pathname === item.link}
+          {...item}
+        />
+      ))}
+    </FooterContainer>
+  );
+};
+
+const FooterContainer = styled(View)`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 8px 34px 8px 34px;
+  justify-content: space-between;
+  background-color: ${({ theme }) => theme.background};
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 5;
+`;
