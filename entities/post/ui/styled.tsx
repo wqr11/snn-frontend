@@ -5,7 +5,7 @@ import { styled } from 'styled-components/native'
 
 export const PostWrapper = styled(Pressable).attrs(({ theme }) => ({
 	android_ripple: {
-		color: theme.grayScale.gray1,
+		color: theme.grayScale.gray2,
 		foreground: true,
 		borderless: false,
 	},
@@ -15,11 +15,11 @@ export const PostWrapper = styled(Pressable).attrs(({ theme }) => ({
 `
 
 export const PostStyled = styled(View)`
-	min-height: 160px;
+	min-height: 240px;
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
-	padding: 16px;
+	padding: 16px 20px;
 	border-color: ${({ theme }) => theme.grayScale.gray2};
 `
 
@@ -30,9 +30,9 @@ export const PostHeader = styled(View)`
 `
 
 export const PostAvatar = styled(Image)`
-	width: 40px;
-	height: 40px;
-	border-radius: 40px;
+	width: 52px;
+	height: 52px;
+	border-radius: 20px;
 	background-color: ${({ theme }) => theme.grayScale.gray2};
 `
 
@@ -43,13 +43,16 @@ export const PostHeaderTexts = styled(View)`
 `
 
 export const PostHeaderUsername = styled(Typography).attrs({
-	$variant: 'body-regular',
+	$variant: 'regular',
+	$size: 18,
 })``
 
-export const PostHeaderUserRole = styled(Typography).attrs({
-	$variant: 'body-thin',
-})``
+export const PostHeaderUserRole = styled(Typography).attrs(({ theme }) => ({
+	$variant: 'thin',
+	$color: theme.grayScale.gray1,
+}))``
 
 export const PostDescription = styled(Typography).attrs({
-	$variant: 'body-regular',
+	$variant: 'regular',
+	$size: 18,
 })``

@@ -2,35 +2,52 @@ import { Text } from 'react-native'
 import { css, styled } from 'styled-components/native'
 
 export interface TypographyProps {
-	$variant?: 'body-regular' | 'body-semibold' | 'body-thin'
+	$variant?: 'regular' | 'semibold' | 'thin' | 'h1'
+	$color?: string
+	$size?: number
+	$weight?: number
 }
 
 export const Typography = styled(Text)<TypographyProps>`
 	font-family: Commissioner;
-	${({ $variant, theme }) => {
+	color: ${({ theme, $color }) => $color ?? theme.foreground};
+	${({ $variant }) => {
 		switch ($variant) {
-			case 'body-semibold':
+			case 'h1':
+				return css`
+					font-size: 36px;
+					font-weight: 700;
+					line-height: 42px;
+				`
+			case 'semibold':
 				return css`
 					font-size: 16px;
 					font-height: 22px;
 					font-weight: 700;
-					color: ${theme.grayScale.gray1};
 				`
-			case 'body-thin':
+			case 'thin':
 				return css`
 					font-size: 16px;
 					font-height: 22px;
 					font-weight: 400;
-					color: ${theme.grayScale.gray1};
 				`
 			default:
-			case 'body-regular':
+			case 'regular':
 				return css`
 					font-size: 16px;
 					font-height: 22px;
 					font-weight: 500;
-					color: ${theme.foreground};
 				`
 		}
 	}}
+	${({ $size }) =>
+		$size &&
+		css`
+			font-size: ${$size}px !important;
+		`}
+    ${({ $weight }) =>
+		$weight &&
+		css`
+			font-size: ${$weight}px !important;
+		`}
 `
