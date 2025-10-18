@@ -13,6 +13,12 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { styled } from "styled-components/native";
 import ToastManager from "toastify-react-native";
 
+const SCREEN_ORDER = {
+  index: 0,
+  feed: 1,
+  profile: 2,
+};
+
 export default function RootLayout() {
   useGate(InitGate);
 
@@ -45,14 +51,18 @@ export default function RootLayout() {
             <Header />
             <Stack
               screenOptions={{
-                animation: "slide_from_left",
+                animation: "slide_from_right",
                 animationTypeForReplace: "pop",
                 animationDuration: 300,
                 headerShown: false,
+                contentStyle: {
+                  backgroundColor: theme.background,
+                },
               }}
               initialRouteName="index"
             >
-              <Stack.Screen name="auth" />
+              <Stack.Screen name="sign-in" />
+              <Stack.Screen name="sign-up" />
               <Stack.Screen name="feed" options={{}}></Stack.Screen>
               <Stack.Screen name="profile" options={{}}></Stack.Screen>
             </Stack>

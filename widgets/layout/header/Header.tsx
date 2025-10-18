@@ -12,7 +12,6 @@ export const Header = () => {
 };
 
 const StyledHeader = styled.View`
-  padding-top: 42px;
   background: ${({ theme }) => theme.background};
 `;
 
