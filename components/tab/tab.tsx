@@ -1,6 +1,16 @@
+import { themeModel } from '@/entities/theme'
+import { useUnit } from 'effector-react'
 import { useEffect, useState } from 'react'
-import { Dimensions, Pressable, Text, View } from 'react-native'
+import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native'
+import Animated, {
+	Easing,
+	useAnimatedStyle,
+	useSharedValue,
+	withSpring,
+	withTiming,
+} from 'react-native-reanimated'
 import { styled } from 'styled-components/native'
+import { ThemeMode, THEMES } from '../provider'
 
 interface IProps {
 	data: {
@@ -9,7 +19,7 @@ interface IProps {
 		count: number
 	}[]
 	activeId: string
-	setActiveId: (activeId: string) => void
+	setActiveId: (activeId: any) => void
 	margin?: {
 		top?: number
 		bottom?: number
@@ -27,8 +37,10 @@ export const Tab = ({
 		top: 0,
 	},
 }: IProps) => {
-	const [translateX, setTranslateX] = useState(0)
-	const [barWidth, setBarWidth] = useState(0)
+	const themeMode = useUnit(themeModel.$themeMode)
+
+	const translateX = useSharedValue(0)
+	const barWidth = useSharedValue(0)
 
 	const [tabSizes, setTabSizes] = useState<{
 		[key: string]: { x: number; width: number }
@@ -49,10 +61,22 @@ export const Tab = ({
 		if (activeTabData) {
 			const { x, width } = activeTabData
 
-			setTranslateX(x)
-			setBarWidth(width)
+			translateX.value = withTiming(x, {
+				duration: 300,
+				easing: Easing.out(Easing.cubic),
+			})
+
+			barWidth.value = withTiming(width, {
+				duration: 300,
+				easing: Easing.out(Easing.cubic),
+			})
 		}
 	}, [activeId, tabSizes])
+
+	const animatedStyles = useAnimatedStyle(() => ({
+		transform: [{ translateX: withSpring(translateX.value) }],
+		width: barWidth.value,
+	}))
 
 	return (
 		<View
@@ -66,7 +90,7 @@ export const Tab = ({
 				marginBottom: margin.bottom,
 			}}
 		>
-			<ActiveBar translateX={translateX} width={barWidth} />
+			<Animated.View style={[animatedStyles, styles(themeMode).bar]} />
 
 			{data.map(({ id, title, count }) => (
 				<Pressable
@@ -98,14 +122,16 @@ export const Tab = ({
 	)
 }
 
-const ActiveBar = styled(View)<{ width: number; translateX: number }>`
-	height: 2px;
-	background-color: ${({ theme }) => theme.accent.primary};
-	width: ${({ width }) => width}px;
-	transform: translateX(${({ translateX }) => translateX}px);
-	position: absolute;
-	bottom: -10px;
-`
+const styles = (theme: ThemeMode) =>
+	StyleSheet.create({
+		bar: {
+			height: 2,
+			backgroundColor: THEMES[theme].accent.primary,
+			width: 40,
+			position: 'absolute',
+			bottom: -10,
+		},
+	})
 
 const ActiveText = styled(Text)`
 	color: ${({ theme }) => theme.accent.primary};
