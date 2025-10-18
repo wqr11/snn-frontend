@@ -4,7 +4,7 @@ import { THEMES } from '@/components/provider'
 import { StyledText } from '@/components/styled-text'
 import { themeModel } from '@/entities/theme'
 import { useUnit } from 'effector-react'
-import { Pressable, TouchableOpacity, View } from 'react-native'
+import { Alert, Linking, Pressable, TouchableOpacity, View } from 'react-native'
 import { styled } from 'styled-components/native'
 
 export type ContactTypeType = 'phone' | 'email' | 'web-site'
@@ -19,6 +19,29 @@ const contactTitles: Record<ContactTypeType, string> = {
 	email: 'Email',
 	phone: 'Телефон',
 	'web-site': 'Веб-сайт',
+}
+
+const contactLinks: Record<ContactTypeType, string> = {
+	email: 'mailto:',
+	phone: 'tel:',
+	'web-site': '',
+}
+
+const openExternalLink = async ({ type, value }: ContactType) => {
+	const url = `${contactLinks[type]}${value}`
+
+	try {
+		const supported = await Linking.canOpenURL(url)
+
+		if (supported) {
+			await Linking.openURL(url)
+		} else {
+			Alert.alert('Ошибка', 'Это приложение не может открыть данную ссылку')
+		}
+	} catch (error) {
+		Alert.alert('Ошибка', 'Не удалось открыть ссылку')
+		console.error(error)
+	}
 }
 
 export type ContactType = {
@@ -36,7 +59,8 @@ export const ContactList = ({ contacts }: IContactList) => {
 			{contacts.map(({ type, value }) => (
 				<ContactItem
 					key={type}
-					description={value}
+					value={value}
+					type={type}
 					icon={contactIcons[type]}
 					title={contactTitles[type]}
 				/>
@@ -48,10 +72,11 @@ export const ContactList = ({ contacts }: IContactList) => {
 interface IContactItem {
 	icon: IconType
 	title: string
-	description: string
+	value: string
+	type: ContactTypeType
 }
 
-export const ContactItem = ({ description, icon, title }: IContactItem) => {
+export const ContactItem = ({ value, icon, title, type }: IContactItem) => {
 	const themeMode = useUnit(themeModel.$themeMode)
 
 	return (
@@ -59,6 +84,7 @@ export const ContactItem = ({ description, icon, title }: IContactItem) => {
 			style={{
 				gap: 16,
 			}}
+			onPress={async () => await openExternalLink({ type, value })}
 		>
 			<View
 				style={{
@@ -82,7 +108,7 @@ export const ContactItem = ({ description, icon, title }: IContactItem) => {
 							{title}
 						</StyledText>
 
-						<OpacityText>{description}</OpacityText>
+						<OpacityText>{value}</OpacityText>
 					</View>
 				</View>
 
