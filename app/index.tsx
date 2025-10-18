@@ -10,7 +10,7 @@ export default function Index() {
 
   useEffect(() => {
     if (isAuthChecked && !isAuth) {
-      router.replace("/sign-in");
+      router.replace("/auth");
     }
   }, [isAuth, isAuthChecked]);
 

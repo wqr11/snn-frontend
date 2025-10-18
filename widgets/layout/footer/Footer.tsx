@@ -34,14 +34,14 @@ export const Footer = () => {
 };
 
 const FooterContainer = styled(View)`
+  margin-top: auto;
   width: 100%;
   display: flex;
   flex-direction: row;
   padding: 8px 34px 8px 34px;
   justify-content: space-between;
   background-color: ${({ theme }) => theme.background};
-  position: absolute;
-  left: 0;
+  position: sticky;
   bottom: 0;
-  z-index: 5;
+  left: 0;
 `;

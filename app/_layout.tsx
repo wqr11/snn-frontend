@@ -51,8 +51,7 @@ export default function RootLayout() {
               }}
               initialRouteName="index"
             >
-              <Stack.Screen name="sign-in" />
-              <Stack.Screen name="sign-up" />
+              <Stack.Screen name="auth" />
               <Stack.Screen name="feed" options={{}}></Stack.Screen>
               <Stack.Screen name="profile" options={{}}></Stack.Screen>
             </Stack>

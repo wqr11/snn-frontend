@@ -19,6 +19,8 @@ export const SignUpPageUI = () => {
   const isAuth = useUnit(authModel.$isAuth);
   const form = useForm($form);
 
+  const toggleAuthType = useUnit(authModel.toggleAuthModalType);
+
   const styles = StyleSheet.create({
     title: {
       marginTop: !isAuth ? 40 : 0,
@@ -48,14 +50,14 @@ export const SignUpPageUI = () => {
         <S.SignUpPageTitle style={styles.title}>Регистрация</S.SignUpPageTitle>
         <Switch
           label="Аккаунт сообщества"
-          value={form.fields.isGroup.value}
-          onValueChange={form.fields.isGroup.onChange}
+          value={form.fields.is_group.value}
+          onValueChange={form.fields.is_group.onChange}
           style={styles.right}
         />
         <Field
           error={form.fields.name.errors?.[0]?.errorText}
           placeholder="Ваше имя"
-          onChangeText={form.fields.email.onChange}
+          onChangeText={form.fields.name.onChange}
         />
         <Field
           error={form.fields.email.errors?.[0]?.errorText}
@@ -72,19 +74,15 @@ export const SignUpPageUI = () => {
           placeholder="Подтвердите пароль"
           onChangeText={form.fields.confirmPassword.onChange}
         />
-        <S.SignUpButton $rippleColor={theme.background}>
-          <Typography
-            $variant="semibold"
-            $color={theme.background}
-            onPress={() => form.submit()}
-          >
+        <S.SignUpButton
+          $rippleColor={theme.background}
+          onPress={() => form.submit()}
+        >
+          <Typography $variant="semibold" $color={theme.background}>
             Зарегаться
           </Typography>
         </S.SignUpButton>
-        <S.SignInLink
-          $rippleColor={theme.background}
-          onPress={() => router.push("/sign-in")}
-        >
+        <S.SignInLink $rippleColor={theme.background} onPress={toggleAuthType}>
           <Typography
             $variant="semibold"
             $color={theme.foreground}

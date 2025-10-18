@@ -1,11 +1,19 @@
 import { ScrollView, Text } from "react-native";
 
 import { Button } from "@/components/button";
-import { Post } from "@/entities/post";
+import { Post, postModel } from "@/entities/post";
 import { PostShortcut } from "@/features/post-shortcut";
+import { useUnit } from "effector-react";
 import { Stack, router } from "expo-router";
 
 export const MainPageUI = () => {
+  const [posts, incrementPage] = useUnit([
+    postModel.$posts,
+    postModel.incrementPage,
+  ]);
+
+  const redirect = () => router.replace("/auth");
+
   return (
     <ScrollView>
       <Stack.Screen
@@ -14,26 +22,20 @@ export const MainPageUI = () => {
         }}
       />
       <PostShortcut />
-      <Button onTouchStart={() => router.replace("/sign-in")}>
+      <Button onTouchStart={redirect}>
         <Text>Логин</Text>
       </Button>
-      <Button onTouchStart={() => router.replace("/sign-up")}>
+      <Button onTouchStart={redirect}>
         <Text>Регистрация</Text>
       </Button>
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
-      <Post $desc="asd" $username="asda" $role="se" />
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          $username={post.owner_id}
+          $desc={post.content}
+          $role={post.title}
+        />
+      ))}
     </ScrollView>
   );
 };

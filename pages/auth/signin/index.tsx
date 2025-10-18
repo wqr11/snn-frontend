@@ -18,6 +18,8 @@ export const SignInPageUI = () => {
   const isAuth = useUnit(authModel.$isAuth);
   const form = useForm($form);
 
+  const toggleAuthType = useUnit(authModel.toggleAuthModalType);
+
   const styles = StyleSheet.create({
     title: {
       marginTop: !isAuth ? 40 : 0,
@@ -56,10 +58,7 @@ export const SignInPageUI = () => {
             Войти
           </Typography>
         </S.SignInButton>
-        <S.SignInLink
-          $rippleColor={theme.background}
-          onPress={() => router.push("/sign-up")}
-        >
+        <S.SignInLink $rippleColor={theme.background} onPress={toggleAuthType}>
           <Typography
             $variant="semibold"
             $color={theme.foreground}

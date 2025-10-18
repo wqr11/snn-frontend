@@ -1,35 +1,70 @@
-import { InitGate } from "@/entities/init";
 import { LOCAL_SAVED_KEYS } from "@/shared/config";
-import { combine, createEffect, createStore, sample } from "effector";
-import { AuthApi, SignInParams } from "..";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  combine,
+  createEffect,
+  createEvent,
+  createStore,
+  sample,
+} from "effector";
+import { AuthApi, SignInParams, SignUpParams } from "..";
 
-export const getAccessFromLocalFx = createEffect(() => {
-  const access_token = localStorage.getItem(LOCAL_SAVED_KEYS.ACCESS_TOKEN);
+export const getAccessFromLocalFx = createEffect(async () => {
+  const data: { access_token: string; refresh_token: string } = JSON.parse(
+    (await AsyncStorage.getItem(LOCAL_SAVED_KEYS.ACCESS_TOKEN)) ?? "{}"
+  );
 
-  return access_token ?? null;
+  if (!data.access_token || !data.refresh_token) return null;
+
+  return {
+    access_token: data.access_token,
+    refresh_token: data.refresh_token,
+  };
 });
+
+export const setAccessToLocalFx = createEffect(
+  async (access: string | null) => {
+    if (!access) return;
+    await AsyncStorage.setItem(LOCAL_SAVED_KEYS.ACCESS_TOKEN, access);
+    return access;
+  }
+);
 
 export const signInFx = createEffect<SignInParams, any, Error>(
   async (params) => {
-    const data = AuthApi.signIn(params);
+    const data = await AuthApi.signIn(params);
     return data;
   }
 );
 
-export const $accessToken = createStore<string | null>(null)
+export const signUpFx = createEffect<SignUpParams, any, Error>(
+  async (params) => {
+    const data = await AuthApi.signUp(params);
+    return data;
+  }
+);
+
+export const $tokens = createStore<{
+  access_token: string;
+  refresh_token: string;
+} | null>(null)
   .on(signInFx.doneData, (_, data) => data)
   .on(getAccessFromLocalFx.doneData, (_, data) => data);
 
-export const $isAuth = combine($accessToken, (token) => !!token);
+export const $isAuth = combine($tokens, (token) => !!token);
 
 export const $isAuthChecked = createStore(false).on(
   getAccessFromLocalFx.finally,
   () => true
 );
 
-signInFx.watch((d) => console.log("ASdASd"));
+export const toggleAuthModalType = createEvent();
+export const $authModalType = createStore<"signin" | "signup">("signin").on(
+  toggleAuthModalType,
+  (state) => (state === "signin" ? "signup" : "signin")
+);
 
 sample({
-  clock: InitGate.open,
-  target: getAccessFromLocalFx,
+  source: signInFx.doneData,
+  target: setAccessToLocalFx,
 });

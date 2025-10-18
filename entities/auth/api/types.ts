@@ -12,3 +12,8 @@ export interface SignUpParams {
   password: string;
   is_group: boolean;
 }
+
+export interface SignUpResult {
+  id: string;
+  email: string;
+}

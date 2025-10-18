@@ -4,7 +4,7 @@ import { createForm } from "effector-forms";
 
 export const $form = createForm({
   fields: {
-    isGroup: {
+    is_group: {
       init: false,
     },
     name: {
@@ -13,7 +13,7 @@ export const $form = createForm({
         {
           name: "required",
           validator: (val) => !!val,
-          errorText: "Пароль обязателен",
+          errorText: "Имя обязательно",
         },
       ],
     },
@@ -50,11 +50,6 @@ export const $form = createForm({
           validator: (val) => !!val,
           errorText: "Пароль обязателен",
         },
-        {
-          name: "equals-pass",
-          validator: (val, form) => val === form.password,
-          errorText: "Пароли не совпадают",
-        },
       ],
     },
   },
@@ -63,7 +58,8 @@ export const $form = createForm({
 sample({
   clock: $form.submit,
   source: { valid: $form.$isValid, values: $form.$values },
-  filter: ({ valid }) => valid,
-  fn: ({ values }) => ({ ...values }),
-  target: authModel.signInFx,
+  filter: ({ valid, values }) =>
+    valid && (values.password === values.confirmPassword || true),
+  fn: ({ values }) => ({ ...values, confirmPassword: undefined }),
+  target: authModel.signUpFx,
 });
