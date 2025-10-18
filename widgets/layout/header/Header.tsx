@@ -5,7 +5,7 @@ import { themeModel } from '@/entities/theme'
 import { useUnit } from 'effector-react'
 import { Image } from 'expo-image'
 import { RelativePathString, usePathname, useRouter } from 'expo-router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FlatList, Pressable, View } from 'react-native'
 import { styled } from 'styled-components/native'
 import { NavItem } from '../nav-item/NavItem'
@@ -24,6 +24,10 @@ export const Header = () => {
 	const setThemeMode = useUnit(themeModel.setThemeMode)
 
 	const pathname = usePathname()
+
+	useEffect(() => {
+		setIsOpen(false)
+	}, [pathname])
 
 	return (
 		<StyledHeader>
@@ -83,7 +87,12 @@ export const Header = () => {
 					</View>
 				</UserContainer>
 
-				<Divider />
+				<Divider
+					margin={{
+						bottom: 49,
+						top: 28,
+					}}
+				/>
 
 				<NavListContainer>
 					<FlatList
@@ -93,7 +102,6 @@ export const Header = () => {
 								{...item}
 								key={item.link}
 								onPress={() => navigate(item.link as RelativePathString)}
-								onClose={() => setIsOpen(false)}
 								isActive={item.link === pathname}
 							/>
 						)}

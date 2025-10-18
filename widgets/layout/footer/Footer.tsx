@@ -30,7 +30,7 @@ const FooterContainer = styled.View`
 	justify-content: space-between;
 	padding: 12px 34px;
 	width: 100%;
-	position: absolute;
+	position: relative;
 	left: 0;
 	z-index: 1000;
 	bottom: 0;

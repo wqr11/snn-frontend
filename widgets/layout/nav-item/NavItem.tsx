@@ -14,7 +14,6 @@ export interface IProps {
 	paddingVertical?: number
 	isText?: boolean
 	isActive?: boolean
-	onClose?: () => void
 }
 
 export const NavItem = ({
@@ -24,7 +23,6 @@ export const NavItem = ({
 	paddingVertical = 17,
 	isText = true,
 	isActive = false,
-	onClose,
 }: IProps) => {
 	const themeMode = useUnit(themeModel.$themeMode)
 
@@ -33,10 +31,6 @@ export const NavItem = ({
 			paddingVertical={paddingVertical}
 			onPress={() => {
 				onPress()
-
-				if (onClose) {
-					onClose()
-				}
 			}}
 		>
 			<Icon
@@ -66,5 +60,6 @@ const StyledPressable = styled(TouchableOpacity)<{ paddingVertical: number }>`
 `
 
 const ActiveStyledText = styled(StyledText)<{ isActive?: boolean }>`
-	color: ${({ theme, isActive }) => isActive && theme.accent.primary};
+	color: ${({ theme, isActive }) =>
+		isActive ? theme.accent.primary : theme.foreground};
 `

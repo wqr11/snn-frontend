@@ -1,45 +1,48 @@
-import { ThemeProvider, THEMES } from "@/components/provider";
-import { themeModel } from "@/entities/theme";
-import { useUnit } from "effector-react";
-import { Stack } from "expo-router";
+import { ThemeProvider, THEMES } from '@/components/provider'
+import { themeModel } from '@/entities/theme'
+import { useUnit } from 'effector-react'
+import { Stack } from 'expo-router'
 
-import { Footer } from "@/widgets/layout/footer/Footer";
-import { Header } from "@/widgets/layout/header/Header";
-import { useEffect } from "react";
-import { StatusBar } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { styled } from "styled-components/native";
+import { Footer } from '@/widgets/layout/footer/Footer'
+import { Header } from '@/widgets/layout/header/Header'
+import { useEffect } from 'react'
+import { StatusBar } from 'react-native'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { styled } from 'styled-components/native'
 
 export default function RootLayout() {
-  const themeMode = useUnit(themeModel.$themeMode);
+	const themeMode = useUnit(themeModel.$themeMode) ?? 'light'
 
-  useEffect(() => {
-    StatusBar.setBackgroundColor(THEMES[themeMode].foreground);
+	useEffect(() => {
+		StatusBar.setBackgroundColor(THEMES[themeMode].foreground)
 
-    StatusBar.setBarStyle(`${themeMode}-content`);
+		StatusBar.setBarStyle(`${themeMode}-content`)
 
-    StatusBar.setTranslucent(false);
-  }, [themeMode]);
+		StatusBar.setTranslucent(false)
+	}, [themeMode])
 
-  return (
-    <ThemeProvider mode={themeMode ?? "light"}>
-      <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1 }}>
-          <StyledScrollView>
-            <Header />
-            <Stack
-              screenOptions={{
-                headerShown: false,
-              }}
-            />
-            <Footer />
-          </StyledScrollView>
-        </SafeAreaView>
-      </SafeAreaProvider>
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider mode={themeMode}>
+			<SafeAreaProvider>
+				<SafeAreaView style={{ flex: 1 }}>
+					<StyledScrollView>
+						<Header />
+						<Stack
+							screenOptions={{
+								headerShown: false,
+								contentStyle: {
+									backgroundColor: THEMES[themeMode].background,
+								},
+							}}
+						/>
+						<Footer />
+					</StyledScrollView>
+				</SafeAreaView>
+			</SafeAreaProvider>
+		</ThemeProvider>
+	)
 }
 
 const StyledScrollView = styled.View`
-  height: 100%;
-`;
+	height: 100%;
+`
