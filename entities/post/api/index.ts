@@ -12,7 +12,8 @@ export class PostApi {
   static async create({
     content,
     file,
-    title,
+    // Useless
+    title = "THIS IS USELESS TITLE",
   }: CreatePostParams): Promise<CreatePostResult> {
     const data = new FormData();
 
@@ -23,6 +24,7 @@ export class PostApi {
     }
 
     return await $authHost("/create-post", {
+      method: "POST",
       body: data,
       headers: {
         "Content-Type": "multipart/form-data",
@@ -30,3 +32,5 @@ export class PostApi {
     });
   }
 }
+
+export * from "./types";

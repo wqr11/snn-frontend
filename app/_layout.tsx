@@ -11,6 +11,7 @@ import { useEffect, useMemo } from "react";
 import { StatusBar } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { styled } from "styled-components/native";
+import ToastManager from "toastify-react-native";
 
 export default function RootLayout() {
   useGate(InitGate);
@@ -58,6 +59,7 @@ export default function RootLayout() {
             {isAuth && <Footer />}
           </StyledScrollView>
         </SafeAreaView>
+        <ToastManager />
       </SafeAreaProvider>
     </ThemeProvider>
   );

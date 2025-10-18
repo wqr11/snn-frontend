@@ -1,8 +1,19 @@
-import { API_BASE_URL } from "@/shared/config";
+import { API_BASE_URL, LOCAL_SAVED_KEYS } from "@/shared/config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authModel } from "../..";
 
 export const $authHost = async (url: string, options?: RequestInit) => {
-  const tokens = authModel.$tokens.getState();
+  let tokens;
+
+  tokens = authModel.$tokens.getState();
+
+  if (!tokens?.access_token) {
+    authModel.getAccessFromLocalFx();
+
+    tokens = JSON.parse(
+      (await AsyncStorage.getItem(LOCAL_SAVED_KEYS.ACCESS_TOKEN)) ?? "{}"
+    );
+  }
 
   return await (
     await fetch(`${API_BASE_URL}${url}`, {

@@ -1,4 +1,6 @@
+import { useForm } from "effector-forms";
 import { StyleSheet } from "react-native";
+import { $form } from "./model";
 import * as S from "./styled";
 
 const styles = StyleSheet.create({
@@ -9,14 +11,21 @@ const styles = StyleSheet.create({
 });
 
 export const PostShortcut = () => {
+  const form = useForm($form);
+
   return (
     <S.PostShortcutStyled style={styles.post}>
       <S.PostShortcutMain>
         <S.PostShortcutAttachmentButton />
-        <S.PostShortcutField placeholder="Как прошёл ваш день?" />
+        <S.PostShortcutField
+          placeholder="Как прошёл ваш день?"
+          onChangeText={form.fields.content.onChange}
+        />
       </S.PostShortcutMain>
       <S.PostShortcutBottom>
-        <S.PostShortcutSendButton>Отправить</S.PostShortcutSendButton>
+        <S.PostShortcutSendButton onPress={() => form.submit()}>
+          Отправить
+        </S.PostShortcutSendButton>
       </S.PostShortcutBottom>
     </S.PostShortcutStyled>
   );

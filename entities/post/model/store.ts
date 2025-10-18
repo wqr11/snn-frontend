@@ -6,7 +6,8 @@ import {
   createStore,
   sample,
 } from "effector";
-import { PostApi } from "../api";
+import { Toast } from "toastify-react-native";
+import { CreatePostParams, PostApi } from "../api";
 import { IPost } from "./types";
 
 export const getPostsFx = createEffect(async (page: number) => {
@@ -14,9 +15,14 @@ export const getPostsFx = createEffect(async (page: number) => {
   return data;
 });
 
+export const createPostFx = createEffect(async (params: CreatePostParams) => {
+  const data = await PostApi.create(params);
+  return data;
+});
+
 export const $posts = createStore<IPost[]>([]).on(
   getPostsFx.doneData,
-  (state, data) => [state, ...(data?.posts ?? [])]
+  (state, data) => [...state, ...(data.posts ?? [])]
 );
 
 export const incrementPage = createEvent<void>();
@@ -33,6 +39,16 @@ export const getPosts = attach({
 sample({
   clock: [incrementPage, InitGate.open],
   target: getPosts,
+});
+
+sample({
+  clock: createPostFx.doneData,
+  fn: () => Toast.success("Пост создан", "top"),
+});
+
+sample({
+  clock: createPostFx.failData,
+  fn: (d) => Toast.error(`Ошибка при создании: ${d.message}`, "top"),
 });
 
 export * from "./types";

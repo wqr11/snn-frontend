@@ -16,6 +16,7 @@ export const SignInPageUI = () => {
   const router = useRouter();
 
   const isAuth = useUnit(authModel.$isAuth);
+  const isPending = useUnit(authModel.signInFx.pending);
   const form = useForm($form);
 
   const toggleAuthType = useUnit(authModel.toggleAuthModalType);
@@ -31,7 +32,7 @@ export const SignInPageUI = () => {
   });
 
   return (
-    <ScrollView>
+    <ScrollView overScrollMode="always">
       <S.SignInPageStyled>
         <Stack.Screen
           options={{
@@ -58,7 +59,11 @@ export const SignInPageUI = () => {
             Войти
           </Typography>
         </S.SignInButton>
-        <S.SignInLink $rippleColor={theme.background} onPress={toggleAuthType}>
+        <S.SignInLink
+          $rippleColor={theme.background}
+          onPress={toggleAuthType}
+          disabled={isPending}
+        >
           <Typography
             $variant="semibold"
             $color={theme.foreground}

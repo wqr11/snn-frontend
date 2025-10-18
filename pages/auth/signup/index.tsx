@@ -17,6 +17,7 @@ export const SignUpPageUI = () => {
   const theme = useTheme();
 
   const isAuth = useUnit(authModel.$isAuth);
+  const isPending = useUnit(authModel.signUpFx.pending);
   const form = useForm($form);
 
   const toggleAuthType = useUnit(authModel.toggleAuthModalType);
@@ -39,7 +40,7 @@ export const SignUpPageUI = () => {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView overScrollMode="always">
       <S.SignUpPageStyled>
         <Stack.Screen
           options={{
@@ -82,7 +83,11 @@ export const SignUpPageUI = () => {
             Зарегаться
           </Typography>
         </S.SignUpButton>
-        <S.SignInLink $rippleColor={theme.background} onPress={toggleAuthType}>
+        <S.SignInLink
+          $rippleColor={theme.background}
+          onPress={toggleAuthType}
+          disabled={isPending}
+        >
           <Typography
             $variant="semibold"
             $color={theme.foreground}

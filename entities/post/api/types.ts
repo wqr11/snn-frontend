@@ -1,4 +1,4 @@
-import { IPost } from string;
+import { IPost } from "..";
 
 export interface ListPostsResult {
   posts: IPost[];
@@ -6,7 +6,7 @@ export interface ListPostsResult {
 }
 
 export interface CreatePostParams {
-  title: string;
+  title?: string;
   content: string;
   file?: File;
 }

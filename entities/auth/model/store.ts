@@ -7,37 +7,49 @@ import {
   createStore,
   sample,
 } from "effector";
-import { AuthApi, SignInParams, SignUpParams } from "..";
+import {
+  AuthApi,
+  SignInParams,
+  SignInResult,
+  SignUpParams,
+  SignUpResult,
+} from "..";
 
 export const getAccessFromLocalFx = createEffect(async () => {
-  const data: { access_token: string; refresh_token: string } = JSON.parse(
-    (await AsyncStorage.getItem(LOCAL_SAVED_KEYS.ACCESS_TOKEN)) ?? "{}"
+  const access_token = await AsyncStorage.getItem(
+    LOCAL_SAVED_KEYS.ACCESS_TOKEN
+  );
+  const refresh_token = await AsyncStorage.getItem(
+    LOCAL_SAVED_KEYS.ACCESS_TOKEN
   );
 
-  if (!data.access_token || !data.refresh_token) return null;
-
   return {
-    access_token: data.access_token,
-    refresh_token: data.refresh_token,
+    access_token,
+    refresh_token,
   };
 });
 
 export const setAccessToLocalFx = createEffect(
-  async (access: string | null) => {
-    if (!access) return;
-    await AsyncStorage.setItem(LOCAL_SAVED_KEYS.ACCESS_TOKEN, access);
-    return access;
+  async ({
+    access_token,
+    refresh_token,
+  }: {
+    access_token: string;
+    refresh_token: string;
+  }) => {
+    await AsyncStorage.setItem(LOCAL_SAVED_KEYS.ACCESS_TOKEN, access_token);
+    await AsyncStorage.setItem(LOCAL_SAVED_KEYS.REFRESH_TOKEN, refresh_token);
   }
 );
 
-export const signInFx = createEffect<SignInParams, any, Error>(
+export const signInFx = createEffect<SignInParams, SignInResult, Error>(
   async (params) => {
     const data = await AuthApi.signIn(params);
     return data;
   }
 );
 
-export const signUpFx = createEffect<SignUpParams, any, Error>(
+export const signUpFx = createEffect<SignUpParams, SignUpResult, Error>(
   async (params) => {
     const data = await AuthApi.signUp(params);
     return data;
@@ -45,10 +57,10 @@ export const signUpFx = createEffect<SignUpParams, any, Error>(
 );
 
 export const $tokens = createStore<{
-  access_token: string;
-  refresh_token: string;
+  access_token: string | null;
+  refresh_token?: string | null;
 } | null>(null)
-  .on(signInFx.doneData, (_, data) => data)
+  .on(signInFx.doneData, (state, data) => data)
   .on(getAccessFromLocalFx.doneData, (_, data) => data);
 
 export const $isAuth = combine($tokens, (token) => !!token);
