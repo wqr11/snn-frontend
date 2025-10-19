@@ -155,10 +155,12 @@ export const ProfilePageUI = ({
         {posts.map(({ id, content, owner, attachments }) => (
           <Post
             key={id}
-            $username={owner.name}
+            $username={
+              !!owner ? owner?.name ?? owner?.company_name : user?.name
+            }
             $desc={content}
-            $avatar={`${STORAGE_BASE_URL}/${owner?.avatar_url}`}
-            $role={owner.main_tag}
+            $avatar={(!!owner ? owner?.avatar_url : user?.avatar_url) ?? ""}
+            $role={!!owner ? owner?.main_tag : user?.main_tag}
             $attachments={attachments}
           />
         ))}

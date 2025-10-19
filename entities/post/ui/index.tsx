@@ -55,6 +55,8 @@ export const Post: React.FC<PostProps> = ({
     }
 
     const cleanPath = filePath.startsWith("/") ? filePath.slice(1) : filePath;
+
+    console.log(`${STORAGE_BASE_URL}/${cleanPath}`);
     return `${STORAGE_BASE_URL}/${cleanPath}`;
   };
 
@@ -75,7 +77,7 @@ export const Post: React.FC<PostProps> = ({
     <S.PostWrapper>
       <S.PostStyled style={styles.post}>
         <S.PostHeader>
-          <S.PostAvatar source={{ uri: $avatar }} />
+          <S.PostAvatar source={{ uri: getFullUrl($avatar ?? "") }} />
           <S.PostHeaderTexts>
             <S.PostHeaderUsername>{$username}</S.PostHeaderUsername>
             <S.PostHeaderUserRole>{$role}</S.PostHeaderUserRole>
@@ -97,7 +99,7 @@ export const Post: React.FC<PostProps> = ({
                     onPress={() => handleFilePress(attachment.file_url)}
                   >
                     <S.ImageAttachment
-                      source={{ uri: fullUrl }}
+                      source={fullUrl}
                       style={styles.imageAttachment}
                       contentFit="cover"
                     />

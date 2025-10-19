@@ -5,6 +5,7 @@ export interface IPost {
   title: string;
   content: string;
   created_at: string;
-  owner: IUser;
+  owner?: IUser;
+  owner_id?: string;
   attachments: [];
 }
