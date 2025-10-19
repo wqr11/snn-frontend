@@ -1,20 +1,19 @@
 import { LOCAL_SAVED_KEYS } from "@/shared/config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createEffect, createEvent, createStore, sample } from "effector";
-import {
-  AuthApi,
-  SignInParams,
-  SignInResult,
-  SignUpParams,
-  SignUpResult,
-} from "../api";
+import { router } from "expo-router";
+import { AuthApi, SignInParams, SignInResult, SignUpParams } from "../api";
+
+export const goToHomeFx = createEffect(() => {
+  router.replace("/");
+});
 
 export const getAccessFromLocalFx = createEffect(async () => {
   const access_token = await AsyncStorage.getItem(
     LOCAL_SAVED_KEYS.ACCESS_TOKEN
   );
   const refresh_token = await AsyncStorage.getItem(
-    LOCAL_SAVED_KEYS.ACCESS_TOKEN
+    LOCAL_SAVED_KEYS.REFRESH_TOKEN
   );
 
   return {
@@ -39,14 +38,15 @@ export const setAccessToLocalFx = createEffect(
 export const signInFx = createEffect<SignInParams, SignInResult, Error>(
   async (params) => {
     const data = await AuthApi.signIn(params);
+
     return data;
   }
 );
 
-export const signUpFx = createEffect<SignUpParams, SignUpResult, Error>(
+export const signUpFx = createEffect<SignUpParams, SignUpParams, Error>(
   async (params) => {
     const data = await AuthApi.signUp(params);
-    return data;
+    return params;
   }
 );
 
@@ -75,9 +75,12 @@ export const $authModalType = createStore<"signin" | "signup">("signin").on(
 
 sample({
   source: signInFx.doneData,
-  target: setAccessToLocalFx,
+  target: [setAccessToLocalFx, goToHomeFx],
 });
 
 sample({
   clock: signUpFx.doneData,
+  target: signInFx,
 });
+
+getAccessFromLocalFx();

@@ -5,7 +5,6 @@ import { $form } from "./model";
 import * as S from "./styled";
 
 import { Typography } from "@/components";
-import { AdditionalDataPostModal } from "@/components/additional-data-post-modal/AdditionalDataPostModal";
 import { Field } from "@/components/field";
 import { authModel } from "@/entities/auth";
 import { userModel } from "@/entities/user";
@@ -35,7 +34,6 @@ export const SignInPageUI = () => {
 
   return (
     <ScrollView overScrollMode="always">
-      <AdditionalDataPostModal />
       <S.SignInPageStyled>
         <Stack.Screen
           options={{

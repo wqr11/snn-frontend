@@ -21,7 +21,7 @@ export const createPostFx = createEffect(async (params: CreatePostParams) => {
 
 export const $posts = createStore<IPost[]>([]).on(
   getPostsFx.doneData,
-  (state, data) => [...new Set([...state, ...(data.posts ?? [])])]
+  (_, data) => data.posts
 );
 
 export const incrementPage = createEvent<void>();
@@ -42,9 +42,7 @@ sample({
 
 sample({
   clock: createPostFx.doneData,
-  target: notificationModel.notifyFx.prepend(
-    (d) => `Пост создан ${JSON.stringify(d)}`
-  ),
+  target: notificationModel.notifyFx.prepend((d) => `Пост создан`),
 });
 
 sample({

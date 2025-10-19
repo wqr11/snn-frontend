@@ -11,8 +11,6 @@ export const notifyFx = createEffect<string, INotification, Error>(
   }
 );
 
-notifyFx.doneData.watch((d) => console.log(d));
-
 export const $notifications = createStore<INotification[]>([]).on(
   notifyFx.doneData,
   (state, data) => [...state, data]

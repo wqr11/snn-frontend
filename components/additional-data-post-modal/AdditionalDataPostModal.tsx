@@ -1,13 +1,17 @@
+import { postShortcutModel } from "@/features/post-shortcut";
+import { useForm } from "effector-forms";
 import { Modal, TouchableOpacity, View } from "react-native";
 import { styled } from "styled-components/native";
+import { Field } from "../field";
 import { Heading } from "../heading";
 import { Icon } from "../icon";
 import { OpacityText } from "../opacity-text";
 import { TagInput } from "../tag-field/tag-field";
 import { useTags } from "../tag-field/use-tag";
-import { MediaList } from "./media-list/MediaList";
 
 export const AdditionalDataPostModal = () => {
+  const form = useForm(postShortcutModel.$form);
+
   const { tags, addTag, removeTag, clearTags, setTags } = useTags([]);
 
   const handleTagsChange = (newTags: any[]) => {
@@ -39,6 +43,14 @@ export const AdditionalDataPostModal = () => {
               gap: 16,
             }}
           >
+            <Field
+              placeholder="Текст поста"
+              multiline
+              style={{ minHeight: 280 }}
+              value={form.fields.content.value}
+              onChangeText={form.fields.content.onChange}
+            />
+
             <TagInput
               tags={tags}
               onChangeTags={handleTagsChange}
@@ -46,7 +58,7 @@ export const AdditionalDataPostModal = () => {
               maxTags={5}
             />
 
-            <MediaList />
+            {/* <MediaList /> */}
           </View>
         </View>
       </View>

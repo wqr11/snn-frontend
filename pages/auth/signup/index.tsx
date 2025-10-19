@@ -5,6 +5,7 @@ import { $form } from "./model";
 import * as S from "./styled";
 
 import { Typography } from "@/components";
+import { AvatarFile } from "@/components/avatar-file";
 import { Field } from "@/components/field";
 import { Switch } from "@/components/switch";
 import { authModel } from "@/entities/auth";
@@ -40,6 +41,10 @@ export const SignUpPageUI = () => {
     router.replace("/");
   }, []);
 
+  const handleAvatarSelect = (file: File | null) => {
+    form.fields.avatar.onChange(file);
+  };
+
   return (
     <ScrollView overScrollMode="always">
       <S.SignUpPageStyled>
@@ -68,6 +73,29 @@ export const SignUpPageUI = () => {
           onChangeText={form.fields.email.onChange}
         />
         <Field
+          error={form.fields.main_tag.errors?.[0]?.errorText}
+          placeholder="Специальность"
+          keyboardType="default"
+          onChangeText={form.fields.main_tag.onChange}
+        />
+        <Field
+          error={form.fields.additional_tags.errors?.[0]?.errorText}
+          placeholder="Дополнительные навыки"
+          keyboardType="default"
+          onChangeText={form.fields.additional_tags.onChange}
+        />
+        <Field
+          error={form.fields.description.errors?.[0]?.errorText}
+          placeholder="Описание"
+          keyboardType="default"
+          onChangeText={form.fields.description.onChange}
+        />
+        <AvatarFile
+          error={form.fields.avatar?.errors?.[0]?.errorText}
+          onFileSelect={handleAvatarSelect}
+          placeholder="Выберите аватар"
+        />
+        <Field
           error={form.fields.password.errors?.[0]?.errorText}
           placeholder="Пароль"
           secureTextEntry
@@ -84,7 +112,7 @@ export const SignUpPageUI = () => {
           onPress={() => form.submit()}
         >
           <Typography $variant="semibold" $color={theme.background}>
-            Зарегаться
+            Зарегистрироваться
           </Typography>
         </S.SignUpButton>
         <S.SignInLink

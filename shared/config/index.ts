@@ -1,5 +1,7 @@
 export const API_BASE_URL = "http://148.253.210.5:8000";
 
+export const STORAGE_BASE_URL = "http://148.253.210.5";
+
 export enum LOCAL_SAVED_KEYS {
   ACCESS_TOKEN = "ACCESS_TOKEN",
   REFRESH_TOKEN = "REFRESH_TOKEN",

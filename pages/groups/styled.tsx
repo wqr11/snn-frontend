@@ -1,68 +1,77 @@
-import { OpacityText } from '@/components/opacity-text'
-import { StyledText } from '@/components/styled-text'
-import { Image } from 'expo-image'
-import { TouchableOpacity, View } from 'react-native'
+import { OpacityText } from "@/components/opacity-text";
+import { StyledText } from "@/components/styled-text";
+import { Image } from "expo-image";
+import { TouchableOpacity, View } from "react-native";
 
-type GroupType = 'company' | 'competence'
+type GroupType = "company" | "competence";
 
 interface IProps {
-	image: string
-	title: string
-	description: string
-	type: GroupType
+  image: string;
+  title: string;
+  description: string;
+  type: GroupType;
+  onPress: () => unknown;
 }
 
 const GROUP_TYPE: Record<GroupType, string> = {
-	company: 'Компания',
-	competence: 'Компетенция',
-}
+  company: "Компания",
+  competence: "Компетенция",
+};
 
-export const GroupItem = ({ description, image, title, type }: IProps) => {
-	return (
-		<TouchableOpacity
-			style={{
-				flexDirection: 'row',
-				justifyContent: 'space-between',
-				paddingVertical: 16,
-				alignItems: 'center',
-			}}
-		>
-			<View
-				style={{
-					flexDirection: 'row',
-					gap: 12,
-				}}
-			>
-				<Image
-					source={image}
-					alt={title}
-					style={{
-						width: 40,
-						height: 40,
-					}}
-				/>
+export const GroupItem = ({
+  description,
+  image,
+  title,
+  type,
+  onPress,
+}: IProps) => {
+  return (
+    <TouchableOpacity
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingVertical: 16,
+        alignItems: "center",
+      }}
+      onPress={onPress}
+    >
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 12,
+        }}
+      >
+        <Image
+          source={image}
+          alt={title}
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+          }}
+        />
 
-				<View>
-					<StyledText
-						style={{
-							fontSize: 14,
-							fontWeight: '600',
-						}}
-					>
-						{title}
-					</StyledText>
+        <View>
+          <StyledText
+            style={{
+              fontSize: 14,
+              fontWeight: "600",
+            }}
+          >
+            {title}
+          </StyledText>
 
-					<OpacityText
-						style={{
-							fontSize: 12,
-						}}
-					>
-						{description}
-					</OpacityText>
-				</View>
-			</View>
+          <OpacityText
+            style={{
+              fontSize: 12,
+            }}
+          >
+            {description}
+          </OpacityText>
+        </View>
+      </View>
 
-			<OpacityText style={{ fontSize: 12 }}>{GROUP_TYPE[type]}</OpacityText>
-		</TouchableOpacity>
-	)
-}
+      <OpacityText style={{ fontSize: 12 }}>{GROUP_TYPE[type]}</OpacityText>
+    </TouchableOpacity>
+  );
+};

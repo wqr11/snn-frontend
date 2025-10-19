@@ -1,29 +1,24 @@
-import { API_BASE_URL, LOCAL_SAVED_KEYS } from "@/shared/config";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_BASE_URL } from "@/shared/config";
+import { authModel } from "../../model";
 
-export const $authHost = async (url: string, options?: RequestInit) => {
-  let tokens;
-  const access_token = await AsyncStorage.getItem(
-    LOCAL_SAVED_KEYS.ACCESS_TOKEN
-  );
-  const refresh_token = await AsyncStorage.getItem(
-    LOCAL_SAVED_KEYS.REFRESH_TOKEN
-  );
+export const $authHost = async (
+  url: string,
+  options?: RequestInit,
+  setJsonType: boolean = true
+) => {
+  const tokens = authModel.$tokens.getState();
 
-  tokens = { access_token, refresh_token };
+  const headers = new Headers();
+
+  if (setJsonType) {
+    headers.set("Content-Type", "application/json");
+  }
+
+  headers.set("Authorization", `Bearer ${tokens?.access_token}`);
 
   const res = await fetch(`${API_BASE_URL}${url}`, {
     ...(options ?? {}),
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      ...(!!tokens
-        ? !!tokens?.access_token && {
-            Authorization: `Bearer ${tokens?.access_token}`,
-          }
-        : {}),
-      ...(options?.headers ?? {}),
-    },
+    headers,
   });
 
   if (!res.ok) {

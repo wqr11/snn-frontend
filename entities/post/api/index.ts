@@ -2,34 +2,36 @@ import { $authHost } from "@/entities/auth";
 import { CreatePostParams, CreatePostResult, ListPostsResult } from "./types";
 
 export class PostApi {
-  static async list(page: number): Promise<ListPostsResult> {
+  static async list(page: number, userId?: string): Promise<ListPostsResult> {
     const offset = (page - 1) * 20;
     const limit = 20;
 
-    return await $authHost(`/posts?offset=${offset}&limit=${limit}`);
+    return await $authHost(
+      `/posts${userId ? `/${userId}/` : ""}?offset=${offset}&limit=${limit}`
+    );
   }
 
   static async create({
     content,
     file,
-    // Useless
     title = "THIS IS USELESS TITLE",
   }: CreatePostParams): Promise<CreatePostResult> {
     const data = new FormData();
 
-    data.set("title", title);
-    data.set("content", content);
+    data.append("title", title);
+    data.append("content", content);
     if (file) {
-      data.set("file", file);
+      data.append("file", file);
     }
 
-    return await $authHost("/create-post", {
-      method: "POST",
-      body: data,
-      headers: {
-        "Content-Type": "multipart/form-data",
+    return await $authHost(
+      "/create-post",
+      {
+        method: "POST",
+        body: data,
       },
-    });
+      false
+    );
   }
 }
 

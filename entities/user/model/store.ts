@@ -11,19 +11,10 @@ export const $user = createStore<IUser | null>(null).on(
   (_, data) => data
 );
 
-// УБРАТЬ ЭТУ ХУЙНЮ !!!
-export const $isAuth = combine(
-  $user,
-  authModel.$tokens,
-  (user, tokens) => !!tokens?.access_token || !!user
-);
+export const $isAuth = combine($user, authModel.$tokens, (user) => !!user);
 
 sample({
-  clock: [
-    authModel.signInFx.doneData,
-    authModel.signUpFx.doneData,
-    authModel.refreshFx.doneData,
-  ],
+  clock: [authModel.$tokens],
   target: getMeFx,
 });
 
