@@ -1,50 +1,141 @@
-# Welcome to your Expo app 👋
+# Я.Проф - React Native приложение
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Мобильное приложение "Я.Проф" - профессиональная платформа для [краткое описание назначения приложения].
 
-## Get started
+## 🚀 Технологии
 
-1. Install dependencies
+### Основной стек
+- **React Native** (0.81.4) - кроссплатформенная мобильная разработка
+- **Expo** (54.0.13) - платформа для разработки React Native приложений
+- **React** (19.1.0) - пользовательские интерфейсы
+- **TypeScript** - статическая типизация
 
-   ```bash
-   npm install
-   ```
+### Навигация
+- **Expo Router** (6.0.11) - файловая маршрутизация
+- **React Navigation** (7.x) - навигация между экранами
 
-2. Start the app
+### State Management
+- **Effector** (23.4.4) - менеджмент состояния
+- **Effector React** (23.3.0) - React биндинги
+- **Effector Forms** (1.3.4) - управление формами
 
-   ```bash
-   npx expo start
-   ```
+### Стилизация
+- **Styled Components** (6.1.19) - CSS-in-JS стилизация
 
-In the output, you'll find options to open the app in a
+### Дополнительные возможности
+- **React Native Reanimated** (4.1.1) - анимации
+- **React Native Gesture Handler** (2.28.0) - жесты
+- **Expo Image** (3.0.9) - работа с изображениями
+- **Expo Image Picker** (17.0.8) - выбор изображений
+- **Expo Document Picker** (14.0.7) - выбор документов
+- **Async Storage** (2.2.0) - локальное хранилище
+- **React Native Config** (1.5.9) - конфигурация окружения
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🏗 Архитектура
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Проект использует **Feature-Sliced Design (FSD)** архитектуру для организации кода:
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+src/
+├── app/                    # Инициализация приложения
+│   └── ...
+├── pages/                 # Страницы приложения
+│   ├── profile/           # Страница профиля
+│   └── ...
+├── features/              # Бизнес-фичи приложения
+│   ├── auth/              # Авторизация
+│   ├── notifications/     # Уведомления
+│   └── ...
+├── entities/              # Бизнес-сущности
+│   ├── user/              # Пользователь
+│   ├── post/              # Публикации
+│   └── ...
+├── shared/                # Переиспользуемые модули
+│   ├── ui/                # UI компоненты
+│   ├── lib/               # Утилиты и хелперы
+│   ├── api/               # API клиент и методы
+│   └── config/            # Конфигурация
+└── widgets/               # Самостоятельные виджеты
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 📦 Установка и запуск
 
-## Learn more
+### Предварительные требования
+- Node.js (рекомендуется LTS версия)
+- pnpm
+- Expo CLI (устанавливается автоматически)
 
-To learn more about developing your project with Expo, look at the following resources:
+### Развертывание проекта
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+1. **Клонирование репозитория**
+```bash
+git clone https://github.com/wqr11/snn-frontend.git
+cd mobile
+```
 
-## Join the community
+2. **Установка зависимостей**
+```bash
+pnpm i
+```
 
-Join our community of developers creating universal apps.
+3. **Запуск в режиме разработки**
+```bash
+# Запуск для всех платформ
+pnpm start
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# Запуск только для Android
+pnpm android
+
+# Запуск только для iOS
+pnpm ios
+```
+
+4. **Сброс проекта (при необходимости)**
+```bash
+pnpm reset-project
+```
+
+## 🔧 Скрипты
+
+- `pnpm start` - запуск сервера разработки
+- `pnpm android` - запуск на Android эмуляторе/устройстве
+- `pnpm ios` - запуск на iOS симуляторе/устройстве
+- `pnpm web` - запуск web версии
+- `pnpm lint` - проверка кода с ESLint
+- `pnpm reset-project` - сброс проекта к начальному состоянию
+
+## 📱 Сборка приложения
+
+### Разработка
+```bash
+pnpm start
+```
+или
+```bash
+pnpn android
+```
+
+## 🛠 Разработка
+
+### Структура проекта FSD
+
+Каждый слой в FSD архитектуре имеет свою зону ответственности:
+
+- **app** - инициализация, провайдеры, глобальные стили
+- **pages** - композиция фич и виджетов в страницы
+- **features** - бизнес-фичи, взаимодействующие с пользователем
+- **entities** - бизнес-сущности и их логика
+- **shared** - переиспользуемый код (UI, утилиты, API)
+- **widgets** - самостоятельные композитные блоки
+
+### Code Style
+
+Проект использует:
+- ESLint с конфигом Expo
+- TypeScript для типизации
+- Prettier (если настроен) для форматирования
+
+### Требования к окружению
+- iOS: 13.0+
+- Android: 6.0+
+*
